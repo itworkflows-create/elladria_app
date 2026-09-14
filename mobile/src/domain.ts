@@ -26,7 +26,27 @@ export const initialState: DemoState = {
   applications: [],
   appointments: [],
 };
-export const jobs = [
+export type Job = {
+  id: string;
+  title: string;
+  company: string;
+  city: string;
+  country: string;
+  salary: string;
+  category: string;
+  openings: number;
+  icon: "business-outline" | "bed-outline" | "cube-outline";
+  description: string;
+  requirements: string[];
+  status: "draft" | "published" | "archived";
+  featured: boolean;
+  hours: string;
+  accommodation: string;
+  benefits: string;
+  contract: string;
+  updatedAt: string;
+};
+export const jobs: Job[] = [
   {
     id: "factory",
     title: "Factory Worker",
@@ -78,8 +98,17 @@ export const jobs = [
       "Willingness to work scheduled shifts",
     ],
   },
-];
-export type Job = (typeof jobs)[number];
+].map((job, index) => ({
+  ...job,
+  country: "Romania",
+  status: "published" as const,
+  featured: index === 0,
+  hours: "40 hrs / week",
+  accommodation: "Included",
+  benefits: "Provided",
+  contract: "Full-time",
+  updatedAt: "2026-09-14T00:00:00.000Z",
+}));
 export const offices = [
   { name: "Colombo HQ", address: "World Trade Center, Echelon Square" },
   { name: "Kandy Branch", address: "Dalada Vidiya, Kandy City Center" },
@@ -145,11 +174,12 @@ export function filterJobs(
   category: string,
   savedOnly = false,
   saved: string[] = [],
+  catalogJobs: Job[] = jobs,
 ) {
   const term = query.trim().toLowerCase();
-  return jobs.filter(
+  return catalogJobs.filter(
     (job) =>
-      `${job.title} ${job.company} ${job.city} Romania ${job.category}`
+      `${job.title} ${job.company} ${job.city} ${job.country} ${job.category}`
         .toLowerCase()
         .includes(term) &&
       (category === "All" || job.category === category) &&
@@ -164,7 +194,7 @@ export function restoreState(raw: string): DemoState {
     Array.isArray(items)
       ? items.filter(
           (item): item is string =>
-            typeof item === "string" && jobs.some((job) => job.id === item),
+            typeof item === "string" && /^[a-zA-Z0-9_-]{1,80}$/.test(item),
         )
       : [];
   const p = value.profile;

@@ -92,7 +92,7 @@ test("storage round-trips and rejects corrupt or malformed data", () => {
     JSON.stringify({
       language: "bad",
       profile: {},
-      saved: ["factory", "unknown", 2],
+      saved: ["factory", "bad/id", 2],
       appointments: [null, { id: "bad" }],
     }),
   );

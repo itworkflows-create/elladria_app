@@ -23,7 +23,6 @@ import {
   canBook,
   filterJobs,
   initialState,
-  jobs,
   restoreState,
   toggleItem,
   type DemoState,
@@ -32,6 +31,8 @@ import {
 import { translate } from "./src/i18n";
 import { Button, Card, Empty, Icon, C, s, type IconName } from "./src/ui";
 import { Booking, Registration, dateLabel } from "./src/forms";
+import { useCatalog } from "./src/useCatalog";
+import AdminPanel from "./src/AdminPanel";
 type Screen =
   | "language"
   | "home"
@@ -48,6 +49,13 @@ type Screen =
 type Route = { screen: Screen; jobId?: string };
 const STORAGE_KEY = "elladria.demo.v1";
 export default function App() {
+  if (
+    Platform.OS === "web" &&
+    typeof window !== "undefined" &&
+    (new URLSearchParams(window.location.search).has("admin") ||
+      window.location.pathname === "/admin")
+  )
+    return <AdminPanel />;
   return (
     <SafeAreaProvider>
       <MobileApp />
@@ -55,6 +63,9 @@ export default function App() {
   );
 }
 function MobileApp() {
+  const { catalog, connection } = useCatalog();
+  const jobs = catalog.jobs;
+  const featuredJob = jobs.find((item) => item.featured) ?? jobs[0];
   const [state, setState] = useState<DemoState>(initialState);
   const [ready, setReady] = useState(false);
   const [storageError, setStorageError] = useState("");
@@ -131,7 +142,7 @@ function MobileApp() {
     const timer = setTimeout(() => setNotice(""), 4500);
     return () => clearTimeout(timer);
   }, [notice]);
-  const job = jobs.find((item) => item.id === route.jobId) ?? jobs[0];
+  const job = jobs.find((item) => item.id === route.jobId);
   const toggle = (key: "saved" | "reminders", id: string) =>
     setState((prev) => ({ ...prev, [key]: toggleItem(prev[key], id) }));
   const requireProfile = (next: Route) => {
@@ -142,6 +153,10 @@ function MobileApp() {
     }
   };
   const apply = () => {
+    if (!job) {
+      notify("This job is no longer available.");
+      return;
+    }
     if (!state.profile) {
       setPending({ screen: "details", jobId: job.id });
       nav("register");
@@ -183,7 +198,9 @@ function MobileApp() {
           />
         </Pressable>
       </View>
-      <Text style={s.body}>🇷🇴 {item.city}, Romania</Text>
+      <Text style={s.body}>
+        {item.city}, {item.country}
+      </Text>
       <View style={s.between}>
         <Text style={s.salary}>
           {item.salary}
@@ -255,7 +272,13 @@ function MobileApp() {
       {screen !== "language" && (
         <View style={s.demoBar}>
           <Text style={s.demoText}>
-            {t("Demo mode")} · Sample jobs & local bookings
+            {t("Demo mode")} ·{" "}
+            {connection === "connected"
+              ? "Catalog connected"
+              : connection === "loading"
+                ? "Loading catalog…"
+                : "Offline catalog"}{" "}
+            · Local bookings
           </Text>
         </View>
       )}
@@ -340,14 +363,9 @@ function MobileApp() {
           {screen === "home" && (
             <>
               <View style={s.hero}>
-                <Text style={s.eyebrow}>SRI LANKA → ROMANIA</Text>
-                <Text style={s.h1}>
-                  {t("Find your opportunity in Romania")} 🇷🇴
-                </Text>
-                <Text style={s.body}>
-                  Explore jobs, plan your office visit, and take the next step
-                  in your career.
-                </Text>
+                <Text style={s.eyebrow}>YOUR NEXT CHAPTER STARTS HERE</Text>
+                <Text style={s.h1}>{t(catalog.content.heroTitle)}</Text>
+                <Text style={s.body}>{catalog.content.heroDescription}</Text>
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel={t("Search jobs, skills or locations")}
@@ -360,6 +378,17 @@ function MobileApp() {
                   </Text>
                 </Pressable>
               </View>
+              {catalog.content.announcementEnabled && (
+                <Card>
+                  <View style={s.row}>
+                    <Icon name="information-circle-outline" color={C.teal} />
+                    <Text style={[s.h2, s.flex]}>
+                      {catalog.content.announcementTitle}
+                    </Text>
+                  </View>
+                  <Text style={s.body}>{catalog.content.announcementBody}</Text>
+                </Card>
+              )}
               <Text style={s.h2}>{t("Quick Actions")}</Text>
               <View style={s.grid}>
                 {(
@@ -427,7 +456,15 @@ function MobileApp() {
                   <Text style={s.link}>{t("View All")}</Text>
                 </Pressable>
               </View>
-              {jobCard(jobs[0])}
+              {featuredJob ? (
+                jobCard(featuredJob)
+              ) : (
+                <Empty
+                  icon="briefcase-outline"
+                  title="No vacancies available"
+                  detail="New opportunities will appear here when they are published."
+                />
+              )}
             </>
           )}
           {(screen === "jobs" || screen === "saved") && (
@@ -458,7 +495,7 @@ function MobileApp() {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={s.chips}
               >
-                {["All", "Manufacturing", "Hospitality", "Logistics"].map(
+                {["All", ...new Set(jobs.map((item) => item.category))].map(
                   (item) => (
                     <Pressable
                       accessibilityRole="button"
@@ -481,16 +518,30 @@ function MobileApp() {
               </ScrollView>
               <Text style={s.small}>
                 {
-                  filterJobs(query, category, screen === "saved", state.saved)
-                    .length
+                  filterJobs(
+                    query,
+                    category,
+                    screen === "saved",
+                    state.saved,
+                    jobs,
+                  ).length
                 }{" "}
                 demo opportunities
               </Text>
-              {filterJobs(query, category, screen === "saved", state.saved).map(
-                jobCard,
-              )}
-              {filterJobs(query, category, screen === "saved", state.saved)
-                .length === 0 && (
+              {filterJobs(
+                query,
+                category,
+                screen === "saved",
+                state.saved,
+                jobs,
+              ).map(jobCard)}
+              {filterJobs(
+                query,
+                category,
+                screen === "saved",
+                state.saved,
+                jobs,
+              ).length === 0 && (
                 <Empty
                   icon="search-outline"
                   title={t("No jobs found")}
@@ -503,7 +554,7 @@ function MobileApp() {
               )}
             </>
           )}
-          {screen === "details" && (
+          {screen === "details" && job && (
             <>
               <View style={s.detailHero}>
                 <View style={s.between}>
@@ -514,7 +565,7 @@ function MobileApp() {
                     style={s.iconButton}
                     onPress={() =>
                       Share.share({
-                        message: `Elladria demo vacancy: ${job.title} at ${job.company}, ${job.city}, Romania. ${job.salary}/month. Sample listing, not a live offer.`,
+                        message: `Elladria demo vacancy: ${job.title} at ${job.company}, ${job.city}, {job.country}. ${job.salary}/month. Sample listing, not a live offer.`,
                       }).catch(() =>
                         notify("Unable to open sharing. Please try again."),
                       )
@@ -524,22 +575,22 @@ function MobileApp() {
                   </Pressable>
                 </View>
                 <Icon name={job.icon} size={44} color="#86f2e4" />
-                <Text style={[s.h1, { color: C.white }]}>{job.title} 🇷🇴</Text>
+                <Text style={[s.h1, { color: C.white }]}>{job.title}</Text>
                 <Text style={{ color: "#dce9ff", fontSize: 16 }}>
                   {job.company}
                   {"\n"}
-                  {job.city}, Romania
+                  {job.city}, {job.country}
                 </Text>
               </View>
               <Text style={s.h2}>{t("Key Details")}</Text>
               <View style={s.grid}>
                 {[
                   ["Salary / month", job.salary, "cash-outline"],
-                  ["Working Hours", "40 hrs / week", "time-outline"],
+                  ["Working Hours", job.hours, "time-outline"],
                   ["Vacancies", `${job.openings} openings`, "people-outline"],
-                  ["Accommodation", "Included", "home-outline"],
-                  ["Food / Benefits", "Provided", "restaurant-outline"],
-                  ["Contract Type", "Full-time", "document-text-outline"],
+                  ["Accommodation", job.accommodation, "home-outline"],
+                  ["Food / Benefits", job.benefits, "restaurant-outline"],
+                  ["Contract Type", job.contract, "document-text-outline"],
                 ].map(([label, value, icon]) => (
                   <View key={label} style={s.detailTile}>
                     <Icon name={icon as IconName} color={C.teal} />
@@ -590,10 +641,17 @@ function MobileApp() {
                 }}
               />
               <Text style={s.small}>
-                All vacancy details are sample data from the design or
-                illustrative examples.
+                Vacancy information is managed in the local admin catalog. This
+                is a demo, not a live recruitment offer.
               </Text>
             </>
+          )}
+          {screen === "details" && !job && (
+            <Empty
+              icon="briefcase-outline"
+              title="This job is no longer available"
+              detail="It may have been archived or removed. Go back to browse current opportunities."
+            />
           )}
           {screen === "register" && (
             <Registration
@@ -788,6 +846,22 @@ function MobileApp() {
                     ))
                 )}
               </Card>
+              {(catalog.content.supportEmail ||
+                catalog.content.supportPhone) && (
+                <Card>
+                  <Text style={s.h2}>Contact Elladria</Text>
+                  {!!catalog.content.supportEmail && (
+                    <Text selectable style={s.body}>
+                      {catalog.content.supportEmail}
+                    </Text>
+                  )}
+                  {!!catalog.content.supportPhone && (
+                    <Text selectable style={s.body}>
+                      {catalog.content.supportPhone}
+                    </Text>
+                  )}
+                </Card>
+              )}
               <Button
                 title={t("Saved Jobs")}
                 secondary
@@ -801,7 +875,7 @@ function MobileApp() {
                 onPress={() => nav("language")}
               />
               <Button
-                title={t("Staff Preview")}
+                title="Demo appointment activity"
                 secondary
                 icon="people-outline"
                 onPress={() => nav("staff")}
@@ -853,7 +927,9 @@ function MobileApp() {
                 .map((item) => (
                   <Card key={item.id}>
                     <Text style={s.h2}>{item.title}</Text>
-                    <Text style={s.body}>{item.city}, Romania</Text>
+                    <Text style={s.body}>
+                      {item.city}, {item.country}
+                    </Text>
                     <Button
                       title={t("View Details")}
                       onPress={() => nav("details", item.id)}
@@ -869,27 +945,44 @@ function MobileApp() {
           )}
           {screen === "countries" && (
             <>
-              <Text style={s.h1}>A new chapter in Europe</Text>
+              <Text style={s.h1}>Explore your next destination</Text>
               <Text style={s.body}>
-                Explore the destination in your Elladria design.
+                Countries with currently published opportunities.
               </Text>
-              <Card>
-                <Text style={{ fontSize: 54 }}>🇷🇴</Text>
-                <Text style={s.h1}>Romania</Text>
-                <Text style={s.body}>Bucharest · Brașov · Cluj-Napoca</Text>
-                <Text style={s.body}>
-                  Manufacturing, hospitality, and logistics opportunities.
-                </Text>
-                <Text style={s.badge}>{jobs.length} DEMO VACANCIES</Text>
-                <Button
-                  title={t("New Vacancies")}
-                  onPress={() => {
-                    setQuery("");
-                    setCategory("All");
-                    nav("jobs");
-                  }}
+              {[...new Set(jobs.map((item) => item.country))].map((country) => (
+                <Card key={country}>
+                  <Icon name="globe-outline" size={40} color={C.teal} />
+                  <Text style={s.h1}>{country}</Text>
+                  <Text style={s.body}>
+                    {[
+                      ...new Set(
+                        jobs
+                          .filter((item) => item.country === country)
+                          .map((item) => item.city),
+                      ),
+                    ].join(" · ")}
+                  </Text>
+                  <Text style={s.badge}>
+                    {jobs.filter((item) => item.country === country).length}{" "}
+                    DEMO VACANCIES
+                  </Text>
+                  <Button
+                    title={t("New Vacancies")}
+                    onPress={() => {
+                      setQuery(country);
+                      setCategory("All");
+                      nav("jobs");
+                    }}
+                  />
+                </Card>
+              ))}
+              {!jobs.length && (
+                <Empty
+                  icon="globe-outline"
+                  title="No destinations yet"
+                  detail="Countries appear here as jobs are published."
                 />
-              </Card>
+              )}
             </>
           )}
           {screen === "staff" && (
@@ -986,7 +1079,7 @@ function MobileApp() {
           <Icon name="close" size={18} color={C.white} />
         </Pressable>
       )}
-      {screen === "details" && (
+      {screen === "details" && job && (
         <View style={s.footer}>
           <Button
             title={
