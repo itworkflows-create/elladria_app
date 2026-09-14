@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Elladria - Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-fixed-variant": "#005049",
+                      "on-primary-fixed": "#131b2e",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "surface-bright": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "outline": "#76777d",
+                      "secondary": "#006a61",
+                      "on-secondary-container": "#006f66",
+                      "on-tertiary-fixed": "#2f1500",
+                      "surface-variant": "#d3e4fe",
+                      "surface-container": "#e5eeff",
+                      "secondary-container": "#86f2e4",
+                      "tertiary-container": "#2f1500",
+                      "inverse-surface": "#213145",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "surface-container-low": "#eff4ff",
+                      "on-primary-container": "#7c839b",
+                      "primary-fixed": "#dae2fd",
+                      "surface": "#f8f9ff",
+                      "on-secondary-fixed": "#00201d",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#565e74",
+                      "tertiary-fixed": "#ffdcc3",
+                      "outline-variant": "#c6c6cd",
+                      "error": "#ba1a1a",
+                      "primary-container": "#131b2e",
+                      "secondary-fixed": "#89f5e7",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#c76c00",
+                      "on-tertiary-fixed-variant": "#6e3900",
+                      "inverse-primary": "#bec6e0",
+                      "tertiary": "#000000",
+                      "on-surface": "#0b1c30",
+                      "surface-dim": "#cbdbf5",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-background": "#0b1c30",
+                      "surface-container-high": "#dce9ff",
+                      "on-surface-variant": "#45464d",
+                      "primary-fixed-dim": "#bec6e0",
+                      "primary": "#000000",
+                      "on-error": "#ffffff",
+                      "background": "#f8f9ff",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "sm": "12px",
+                      "gutter": "20px",
+                      "xl": "32px",
+                      "margin-desktop": "40px",
+                      "md": "16px",
+                      "margin-mobile": "16px",
+                      "lg": "24px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "headline-xl": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .input-field {
+            transition: all 0.2s ease-in-out;
+        }
+        .input-field:focus {
+            box-shadow: 0 0 0 2px var(--tw-colors-primary);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col md:flex-row">
+<!-- Top Navigation (Mobile Only) -->
+<header class="md:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface shadow-sm">
+<button class="text-primary flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-on-surface">Elladria</div>
+<div class="w-10 h-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:flex-row w-full max-w-[1440px] mx-auto mt-16 md:mt-0">
+<!-- Left Side: Visual / Branding (Desktop) -->
+<div class="hidden md:flex flex-1 flex-col justify-between bg-primary text-on-primary p-margin-desktop relative overflow-hidden">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0 opacity-40 mix-blend-overlay" data-alt="A modern, high-end corporate office lobby in Sri Lanka, featuring sleek minimalist architecture with subtle diplomatic design cues. The space is well-lit with natural daylight streaming through large windows, highlighting clean lines and professional elegance. The color palette emphasizes deep navy blues, crisp whites, and slate tones, conveying institutional trust and stability. The overall mood is professional, secure, and aspirational, reflecting a high-quality international mobility and recruitment agency context." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCSf0zKeUWgiPFliryeyl2DPzp08xTNhR_op2yLUWpJc_d16yFRvdqFgzaH6UCc2WMZA6H9Dp5qhh4sWXr83G1K7kwC972S9n-tHqp614o1ri_mImE7hgmmfkcISQB0cJ2fFoVkjWRFUihjxbTtHYNDWdv29f7HCivIO8mISeWIimToK2HMzaYJM-NgY2xBaRFaNSOmftyVX-37yONCPoZeajm2rJBwVKFRQiocdDgQWa_05jA48QA')"></div>
+<div class="relative z-10">
+<div class="font-headline-xl text-headline-xl text-on-primary mb-xl">Elladria</div>
+<h1 class="font-headline-lg text-headline-lg text-on-primary max-w-md">Your gateway to global professional opportunities.</h1>
+</div>
+<div class="relative z-10 flex items-center space-x-sm">
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<p class="font-body-md text-body-md text-on-primary">Trusted by hundreds of professionals worldwide.</p>
+</div>
+</div>
+<!-- Right Side: Registration Form -->
+<div class="flex-1 flex items-center justify-center p-margin-mobile md:p-margin-desktop bg-surface z-10">
+<div class="w-full max-w-md glass-panel rounded-xl p-lg md:p-xl mt-md md:mt-0">
+<div class="mb-lg md:mb-xl text-center md:text-left">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">Create Your Profile</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Join Elladria to start your professional journey.</p>
+</div>
+<form action="#" class="space-y-md" method="POST">
+<!-- Name Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-xs" for="fullName">Full Name</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="person">person</span>
+</div>
+<input class="input-field block w-full pl-xl py-sm pr-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-0 font-body-md text-body-md" id="fullName" name="fullName" placeholder="John Doe" required="" type="text"/>
+</div>
+</div>
+<!-- Phone Number Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-xs" for="phoneNumber">Phone Number</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="phone">phone</span>
+</div>
+<input class="input-field block w-full pl-xl py-sm pr-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-0 font-body-md text-body-md" id="phoneNumber" name="phoneNumber" placeholder="+94 77 123 4567" required="" type="tel"/>
+</div>
+</div>
+<!-- Email Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-xs" for="email">Email Address</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="mail">mail</span>
+</div>
+<input class="input-field block w-full pl-xl py-sm pr-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-0 font-body-md text-body-md" id="email" name="email" placeholder="john.doe@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-xs" for="password">Password</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="lock">lock</span>
+</div>
+<input class="input-field block w-full pl-xl py-sm pr-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-0 font-body-md text-body-md" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 pr-sm flex items-center text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+<p class="mt-xs font-body-sm text-body-sm text-on-surface-variant">Must be at least 8 characters.</p>
+</div>
+<!-- Submit Button -->
+<div class="pt-sm">
+<button class="w-full flex justify-center items-center py-sm px-md border border-transparent rounded-lg shadow-sm font-label-md text-label-md text-on-primary bg-primary hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200" type="submit">
+                            Register
+                        </button>
+</div>
+</form>
+<!-- Login Link -->
+<div class="mt-lg text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Already have an account? 
+                        <a class="font-label-md text-label-md text-primary hover:text-inverse-surface transition-colors duration-200" href="#">Login</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple script to toggle password visibility
+        document.addEventListener('DOMContentLoaded', () => {
+            const togglePasswordBtn = document.querySelector('button[aria-label="Toggle password visibility"]');
+            const passwordInput = document.getElementById('password');
+            const iconSpan = togglePasswordBtn.querySelector('span');
+
+            togglePasswordBtn.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                if (type === 'password') {
+                    iconSpan.textContent = 'visibility';
+                    iconSpan.setAttribute('data-icon', 'visibility');
+                } else {
+                    iconSpan.textContent = 'visibility_off';
+                    iconSpan.setAttribute('data-icon', 'visibility_off');
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Elladria - Job Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "outline": "#76777d",
+                        "secondary": "#006a61",
+                        "on-secondary-container": "#006f66",
+                        "on-tertiary-fixed": "#2f1500",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container": "#e5eeff",
+                        "secondary-container": "#86f2e4",
+                        "tertiary-container": "#2f1500",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-container": "#7c839b",
+                        "primary-fixed": "#dae2fd",
+                        "surface": "#f8f9ff",
+                        "on-secondary-fixed": "#00201d",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "tertiary-fixed": "#ffdcc3",
+                        "outline-variant": "#c6c6cd",
+                        "error": "#ba1a1a",
+                        "primary-container": "#131b2e",
+                        "secondary-fixed": "#89f5e7",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#c76c00",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "inverse-primary": "#bec6e0",
+                        "tertiary": "#000000",
+                        "on-surface": "#0b1c30",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-background": "#0b1c30",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#45464d",
+                        "primary-fixed-dim": "#bec6e0",
+                        "primary": "#000000",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "sm": "12px",
+                        "gutter": "20px",
+                        "xl": "32px",
+                        "margin-desktop": "40px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background h-full font-sans antialiased overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface shadow-sm transition-colors duration-200">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">Job Details</h1>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Share" class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-20 pb-32 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto min-h-screen">
+<!-- Hero Section -->
+<div class="mb-8 relative rounded-xl overflow-hidden h-64 md:h-80 shadow-sm border border-outline-variant/30">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A modern, clean industrial factory floor in Bucharest, Romania. High-quality lighting illuminating an organized assembly line. Workers in crisp uniforms performing tasks with precision. The aesthetic is professional, safe, and efficient, emphasizing a stable work environment. Shot with a wide-angle lens, corporate photography style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBDhDA1KmRbLhRpk9QZBkVcrdYLkBtlmGZZs15JRZZ7pR_fWdNoanX5oz8Szjq4cVXxlZJei5oWMT8Mcqak8ersj-8uLRnJPESwgLH0lPVJWVCR3xvwzYEi5UqVIRejnoGbopUkUfo7W7WBZIjp-6ACduNV7i-nrLouu1DU08J7ELlV3rbH7pnJn3I-4xmiEQHb-lbpvj_vsqq1LkxgwoO-FR8yRTrtv7RJRDwpl0_iLmxuuGYWekM')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-lg w-full">
+<div class="flex items-start justify-between">
+<div>
+<div class="inline-flex items-center gap-2 bg-[#dcfce7] text-[#166534] px-3 py-1 rounded-full mb-3">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md">OPEN</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-on-primary mb-2">Factory Worker 🇷🇴</h2>
+<div class="flex items-center gap-4 text-on-primary/90 font-body-md text-body-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">business</span>
+<span>EuroManufacture S.A.</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Bucharest, Romania</span>
+</div>
+</div>
+</div>
+<div class="hidden md:block bg-surface p-sm rounded-lg shadow-lg">
+<img class="w-16 h-16 object-contain rounded" data-alt="A clean, minimalist logo for EuroManufacture S.A., featuring geometric shapes in shades of deep navy and steel gray, conveying trust and industrial precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvMKcBmwSfI8Rbawl8a3dKrFoWET33uY6yPEUm3l4w1sHmZP9BCa_Gru2AxMBEUWTZEwdWKZ7XscPEReptPIIylQfaA2g8yb_49WGqV4y2VM5HuqW1RcMtF5_kAQKpmAozcq96EpaATKmkZs2P3xZqR_qA5jZFU_PApRin-cFh4dy1n6ZCEE2m39-fEzG-0i0TL6d3gFEfDvdmIOp9n4j_dx2d9eA-M76GnjUAfmUjem9HXB35e1Y"/>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Left Column: Details -->
+<div class="md:col-span-2 space-y-8">
+<!-- Key Details Bento Grid -->
+<section>
+<h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Key Details</h3>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-sm">
+<!-- Salary -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[24px]">payments</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Salary</p>
+<p class="font-headline-md text-headline-md text-primary">€800 - €1000</p>
+</div>
+<!-- Hours -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[24px]">schedule</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Working Hours</p>
+<p class="font-headline-md text-headline-md text-primary">40 hrs / week</p>
+</div>
+<!-- Vacancies -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[24px]">group</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Vacancies</p>
+<p class="font-headline-md text-headline-md text-primary">20 Openings</p>
+</div>
+<!-- Accommodation -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[24px]">apartment</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Accommodation</p>
+<p class="font-body-md text-body-md font-medium text-primary">Included</p>
+</div>
+<!-- Food -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[24px]">restaurant</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Food / Benefits</p>
+<p class="font-body-md text-body-md font-medium text-primary">Provided</p>
+</div>
+<!-- Contract -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[24px]">history_edu</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Contract Type</p>
+<p class="font-body-md text-body-md font-medium text-primary">Full-time</p>
+</div>
+</div>
+</section>
+<!-- Requirements -->
+<section class="bg-surface-container-lowest p-lg rounded-xl border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Requirements</h3>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<div class="mt-1 text-secondary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Physical Fitness</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Must be physically fit to handle manual labor tasks on the factory floor, including lifting, standing for extended periods, and operating machinery safely.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<div class="mt-1 text-secondary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Language Skills</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Basic understanding of English or Romanian is required to communicate effectively with supervisors and understand safety protocols.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<div class="mt-1 text-secondary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Experience</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Prior experience in a manufacturing or factory setting is preferred but not strictly mandatory. Training will be provided.</p>
+</div>
+</li>
+</ul>
+</section>
+<!-- Job Description text -->
+<section class="bg-surface-container-lowest p-lg rounded-xl border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<h3 class="font-headline-md text-headline-md mb-4 text-on-surface">About the Role</h3>
+<div class="font-body-md text-body-md text-on-surface-variant space-y-4">
+<p>We are seeking dedicated Factory Workers to join EuroManufacture S.A. in Bucharest, Romania. This is an excellent opportunity for individuals looking to secure stable employment abroad with a reputable European company.</p>
+<p>Your primary responsibilities will involve assisting in the production line, maintaining a clean and safe workspace, and ensuring quality control standards are met. We value teamwork, punctuality, and a strong work ethic.</p>
+</div>
+</section>
+</div>
+<!-- Right Column: Map & Recruiter -->
+<div class="space-y-6">
+<!-- Location Map -->
+<div class="bg-surface-container-lowest rounded-xl border border-[#E2E8F0] shadow-[0_1px_3px_rgba(0,0,0,0.05)] overflow-hidden">
+<div class="p-4 border-b border-outline-variant/30">
+<h4 class="font-label-md text-label-md text-on-surface">Location Overview</h4>
+</div>
+<div class="h-48 w-full bg-surface-container-highest relative">
+<!-- Placeholder for map -->
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A modern stylized digital map of Bucharest, Romania, highlighting industrial zones. Minimalist UI design with soft blues and grays, professional corporate aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB-dLpQTD06tJoZKoIkUIwpBLA9SnRzh29GS8fb_pLXE0ol2FCX5sxtZhF23s3-Cw_WCm6w0kP0bT0IqGcXNtu9VXWXaYHpYDI3z_XcIXtYDEz9KZjEL1v-Xq368NuVqQh5sAcERF1dfEuZrwY2Y86JzaNo5Inzno0sR-fWQ3qpLSSugEq7qza-nogKIy7D_T_smf7QhAtA8k5heP2heBAvOqNKpU6cu2LBwRq42fKAboV1xfLCfec')"></div>
+</div>
+<div class="p-4 bg-surface-container-lowest">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Bucharest is the vibrant capital of Romania, offering a blend of modern amenities and historical charm. The industrial zone is well-connected by public transport.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar (Contextual FAB Replacement for Transactional/Details Screen) -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-surface border-t border-outline-variant/20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] px-margin-mobile md:px-margin-desktop py-4 pb-safe flex justify-between items-center gap-4">
+<div class="flex gap-2">
+<!-- Save Job -->
+<button aria-label="Save Job" class="flex items-center justify-center p-3 rounded-lg border border-primary text-primary hover:bg-surface-container-low transition-colors bg-on-primary shadow-sm">
+<span class="material-symbols-outlined">favorite_border</span>
+</button>
+<!-- Remind Me -->
+<button aria-label="Remind Me" class="hidden sm:flex items-center justify-center p-3 rounded-lg border border-primary text-primary hover:bg-surface-container-low transition-colors bg-on-primary shadow-sm">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+<!-- Make Appointment -->
+<button class="flex-1 max-w-md flex items-center justify-center gap-2 bg-primary text-on-primary py-3 px-6 rounded-lg font-label-md text-label-md shadow-md hover:bg-inverse-surface transition-colors">
+<span class="material-symbols-outlined">calendar_month</span>
+            Make Appointment
+        </button>
+</div>
+</body></html>

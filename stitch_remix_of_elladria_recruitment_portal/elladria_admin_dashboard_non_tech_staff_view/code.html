@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "outline-variant": "#c6c6cd", "tertiary": "#000000", "secondary-fixed": "#89f5e7", "on-error": "#ffffff", "secondary-fixed-dim": "#6bd8cb", "primary": "#000000", "on-secondary-container": "#006f66", "on-primary": "#ffffff", "on-error-container": "#93000a", "on-primary-fixed": "#131b2e", "tertiary-fixed": "#ffdcc3", "background": "#f8f9ff", "secondary": "#006a61", "primary-container": "#131b2e", "error": "#ba1a1a", "surface-container-highest": "#d3e4fe", "secondary-container": "#86f2e4", "on-tertiary": "#ffffff", "surface-variant": "#d3e4fe", "inverse-primary": "#bec6e0", "on-surface-variant": "#45464d", "primary-fixed-dim": "#bec6e0", "on-secondary-fixed-variant": "#005049", "error-container": "#ffdad6", "on-secondary-fixed": "#00201d", "on-primary-fixed-variant": "#3f465c", "outline": "#76777d", "on-secondary": "#ffffff", "inverse-on-surface": "#eaf1ff", "on-tertiary-fixed": "#2f1500", "on-background": "#0b1c30", "surface-tint": "#565e74", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "surface-container-low": "#eff4ff", "primary-fixed": "dae2fd", "on-tertiary-container": "#c76c00", "surface-container": "#e5eeff", "surface": "#f8f9ff", "on-surface": "#0b1c30", "surface-container-lowest": "#ffffff", "surface-container-high": "#dce9ff", "tertiary-container": "#2f1500", "surface-bright": "#f8f9ff", "on-primary-container": "#7c839b", "tertiary-fixed-dim": "#ffb77d", "on-tertiary-fixed-variant": "#6e3900" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "base": "8px", "lg": "24px", "gutter": "20px", "xs": "4px", "margin-desktop": "40px", "sm": "12px", "xl": "32px", "md": "16px", "margin-mobile": "16px" }, "fontFamily": { "body-md": ["Inter"], "headline-md": ["Inter"], "body-lg": ["Inter"], "headline-xl": ["Inter"], "headline-lg": ["Inter"], "label-md": ["Inter"], "body-sm": ["Inter"], "headline-lg-mobile": ["Inter"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-20 px-lg flex items-center gap-sm bg-surface-container-low"><div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary font-headline-md">E</div><div class="flex flex-col"><span class="font-headline-md text-on-surface leading-none tracking-tight">ELLADRIA</span><span class="font-label-sm text-secondary leading-tight mt-xs">Staff Portal • Colombo</span></div></div><div class="px-md py-sm"><div class="px-sm py-xs text-on-surface-variant font-label-sm uppercase tracking-wider">Main Navigation</div><nav class="flex flex-col gap-xs mt-xs" data-active-classes="bg-primary-container text-on-primary font-headline-md rounded-xl"><a class="flex items-center justify-between px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview-and-todays-tasks" href="#"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-[22px]">task_alt</span><span class="font-body-md font-semibold">Overview & Tasks</span></div></a><a class="flex items-center justify-between px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="vacancies-and-jobs" href="#"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-[22px]">work_outline</span><span class="font-body-md font-semibold">Vacancies & Jobs</span></div></a><a class="flex items-center justify-between px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="appointments-queue" href="#"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-[22px]">calendar_month</span><span class="font-body-md font-semibold">Appointments</span></div><span class="px-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm font-bold">5</span></a><a class="flex items-center justify-between px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="candidate-directory" href="#"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-[22px]">badge</span><span class="font-body-md font-semibold">Candidate Directory</span></div></a><a class="flex items-center justify-between px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="messages-and-alerts" href="#"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-[22px]">campaign</span><span class="font-body-md font-semibold">Messages & Alerts</span></div></a><a class="flex items-center justify-between px-md py-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="staff-guide-and-settings" href="#"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-[22px]">menu_book</span><span class="font-body-md font-semibold">Staff Guide & Setup</span></div></a></nav></div></div><div class="p-md m-md rounded-xl bg-surface-container-low flex flex-col gap-xs"><div class="flex items-center gap-xs text-secondary font-label-md"><span class="material-symbols-outlined text-[18px]">verified</span><span>Colombo Hub Active</span></div><p class="font-body-sm text-on-surface-variant">Romania Visa Batch #2024-Q3 processing on schedule.</p></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-20 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-lg flex items-center justify-between gap-md"><div class="flex-1 max-w-xl"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-md text-on-surface-variant pointer-events-none">search</span><input class="w-full pl-12 pr-md py-2.5 rounded-xl bg-surface-container-low text-on-surface font-body-md placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="Search candidate by name or phone..." type="text"/></div></div><div class="flex items-center gap-md"><button class="flex items-center gap-xs px-md py-2 rounded-xl bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors font-label-md" type="button"><span class="material-symbols-outlined text-[18px]">support_agent</span><span>Need Help? Call Admin</span></button><button aria-label="Notifications" class="relative p-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-sm pl-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-md text-on-surface leading-tight">Sarah Perera</span><span class="font-label-sm text-on-surface-variant leading-tight">Reception & Officer</span></div></div></div></header><main class="w-full pt-20 px-lg pb-xl bg-background flex-1"><div class="flex flex-col w-full">
+<!-- Staff Welcome & Branch Context -->
+<header class="flex flex-col gap-md mb-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-xs">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">Good Morning, Sarah!</h1>
+<span class="text-[32px] animate-bounce">👋</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">storefront</span>
+<span class="font-semibold text-on-surface">Colombo Head Office</span>
+<span class="text-outline-variant">•</span>
+<span>Today is Monday, Sep 04</span>
+<span class="text-outline-variant">•</span>
+<span class="inline-flex items-center gap-xs px-sm py-0.5 rounded-full bg-error-container text-on-error-container font-label-md font-bold">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+            5 appointments need your confirmation
+          </span>
+</p>
+</div>
+<div class="flex items-center gap-sm">
+<div class="px-md py-sm rounded-xl bg-surface-container-lowest shadow-sm flex items-center gap-sm">
+<div class="w-10 h-10 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">contactless</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Mobile App Sync</span>
+<span class="font-label-md text-secondary font-bold flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              Live & Connected
+            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Friendly Tip Banner -->
+<div class="p-md rounded-xl bg-surface-container-high flex items-start gap-md shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">lightbulb</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface">Friendly Staff Tip</span>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">
+          When you switch any job status to <span class="font-bold text-on-surface bg-secondary-container px-xs py-0.5 rounded">🟢 OPEN</span>, our candidate mobile app automatically sends a clear SMS & push alert to every Sri Lankan job seeker on the waitlist. <strong>Zero technical setup needed!</strong>
+</p>
+</div>
+</div>
+</header>
+<!-- Key Statistics Summary -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-xl">
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Live App Vacancies</span>
+<span class="font-headline-xl text-headline-xl text-on-surface mt-xs font-extrabold">14</span>
+<span class="font-body-sm text-body-sm text-secondary font-medium mt-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+          Visible to candidates right now
+        </span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">work</span>
+</div>
+</div>
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Pending Desk Actions</span>
+<span class="font-headline-xl text-headline-xl text-error mt-xs font-extrabold">5</span>
+<span class="font-body-sm text-body-sm text-error font-medium mt-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">pending_actions</span>
+          Awaiting confirmation today
+        </span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">notification_important</span>
+</div>
+</div>
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Registered Job Seekers</span>
+<span class="font-headline-xl text-headline-xl text-on-surface mt-xs font-extrabold">1,240</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium mt-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+          Verified passports on file
+        </span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">group</span>
+</div>
+</div>
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Alerts Sent Today</span>
+<span class="font-headline-xl text-headline-xl text-secondary mt-xs font-extrabold">340</span>
+<span class="font-body-sm text-body-sm text-secondary font-medium mt-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+          Delivered in Sinhala & Tamil
+        </span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">sms</span>
+</div>
+</div>
+</section>
+<!-- Quick Actions Bar ("What would you like to do?") -->
+<section class="mb-xl flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">What would you like to do?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Simple tools designed for the Colombo front desk team</p>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Single-click shortcuts</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Action 1 -->
+<button class="group text-left p-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between h-full" type="button">
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center mb-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[26px]">add_circle</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface block leading-tight">Post a New Vacancy</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Takes only 2 minutes • Pick country, monthly salary & basic job duties.</p>
+</div>
+<div class="mt-md flex items-center gap-xs text-primary font-label-md font-bold">
+<span>Create Vacancy</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</button>
+<!-- Action 2 -->
+<button class="group text-left p-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between h-full" type="button">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary text-on-secondary flex items-center justify-center mb-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[26px]">event_available</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="font-headline-md text-headline-md text-on-surface block leading-tight">Review Appointments</span>
+<span class="px-xs py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm font-bold">5</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">5 candidates waiting for confirmation • One-click SMS dispatch.</p>
+</div>
+<div class="mt-md flex items-center gap-xs text-secondary font-label-md font-bold">
+<span>Open Schedule</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</button>
+<!-- Action 3 -->
+<button class="group text-left p-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between h-full" type="button">
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-container text-on-primary flex items-center justify-center mb-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[26px]">cell_tower</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface block leading-tight">Send SMS Broadcast</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Broadcast urgent notices or embassy interview updates to candidates.</p>
+</div>
+<div class="mt-md flex items-center gap-xs text-on-surface font-label-md font-bold">
+<span>Write Message</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</button>
+<!-- Action 4 -->
+<button class="group text-left p-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between h-full" type="button">
+<div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface flex items-center justify-center mb-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[26px]">person_search</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface block leading-tight">Find a Candidate</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Quick search using Sri Lankan phone (07X-XXXXXXX) or Passport ID.</p>
+</div>
+<div class="mt-md flex items-center gap-xs text-on-surface font-label-md font-bold">
+<span>Search Directory</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</button>
+</div>
+</section>
+<!-- Primary Section: Today's Appointments -->
+<section class="mb-xl flex flex-col gap-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-sm">
+<div>
+<div class="flex items-center gap-sm">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Today's Appointments</h2>
+<span class="px-sm py-0.5 rounded-full bg-error-container text-on-error-container font-label-md font-bold">Needs Desk Action</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Confirm appointments so candidates receive instant directions via SMS to Colombo 03 Office</p>
+</div>
+<!-- Filter Tabs -->
+<div class="flex items-center p-1 rounded-xl bg-surface-container-high">
+<button class="px-md py-1.5 rounded-lg text-on-surface font-label-md hover:bg-surface-container-lowest transition-colors" type="button">All (12)</button>
+<button class="px-md py-1.5 rounded-lg bg-surface-container-lowest text-error font-label-md shadow-sm font-bold flex items-center gap-xs" type="button">
+<span>Pending Action</span>
+<span class="w-2 h-2 rounded-full bg-error"></span>
+</button>
+<button class="px-md py-1.5 rounded-lg text-on-surface-variant font-label-md hover:bg-surface-container-lowest transition-colors" type="button">Confirmed (7)</button>
+<button class="px-md py-1.5 rounded-lg text-on-surface-variant font-label-md hover:bg-surface-container-lowest transition-colors" type="button">Completed</button>
+</div>
+</div>
+<!-- Appointment Cards List -->
+<div class="flex flex-col gap-sm">
+<!-- Row 1 -->
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-md transition-all" id="row-kamal">
+<div class="flex flex-col sm:flex-row sm:items-center gap-md min-w-0">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="font-headline-md text-headline-md text-primary font-bold">KP</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-sm flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface">Kamal Perera</span>
+<span class="px-sm py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm font-bold">Needs Confirmation</span>
+</div>
+<div class="flex items-center gap-md mt-xs flex-wrap font-body-md text-body-md text-on-surface-variant">
+<span class="flex items-center gap-xs text-on-surface font-semibold">
+<span class="material-symbols-outlined text-[18px] text-secondary">call</span>
+                077 123 4567
+              </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-xs text-primary font-semibold">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                Today at 10:30 AM
+              </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">work_outline</span>
+                Interested In: <strong class="text-on-surface">Romania - Factory Worker 🇷🇴</strong>
+</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-sm shrink-0 flex-wrap">
+<button class="flex items-center gap-xs px-md py-2.5 rounded-xl bg-secondary text-on-secondary hover:bg-secondary-fixed-dim hover:text-on-secondary-fixed transition-colors font-label-md font-bold shadow-sm" onclick="confirmAppointment('row-kamal', 'Kamal Perera', '077 123 4567')" type="button">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Confirm & Send SMS</span>
+</button>
+<button class="flex items-center gap-xs px-md py-2.5 rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>Reschedule</span>
+</button>
+<button class="flex items-center gap-xs px-sm py-2.5 rounded-xl text-error hover:bg-error-container transition-colors font-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-md transition-all" id="row-sunethra">
+<div class="flex flex-col sm:flex-row sm:items-center gap-md min-w-0">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="font-headline-md text-headline-md text-primary font-bold">SF</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-sm flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface">Sunethra Fernando</span>
+<span class="px-sm py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm font-bold">Needs Confirmation</span>
+</div>
+<div class="flex items-center gap-md mt-xs flex-wrap font-body-md text-body-md text-on-surface-variant">
+<span class="flex items-center gap-xs text-on-surface font-semibold">
+<span class="material-symbols-outlined text-[18px] text-secondary">call</span>
+                071 890 1234
+              </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-xs text-primary font-semibold">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                Today at 11:15 AM
+              </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">work_outline</span>
+                Interested In: <strong class="text-on-surface">Romania - Hotel Housekeeping 🇷🇴</strong>
+</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-sm shrink-0 flex-wrap">
+<button class="flex items-center gap-xs px-md py-2.5 rounded-xl bg-secondary text-on-secondary hover:bg-secondary-fixed-dim hover:text-on-secondary-fixed transition-colors font-label-md font-bold shadow-sm" onclick="confirmAppointment('row-sunethra', 'Sunethra Fernando', '071 890 1234')" type="button">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Confirm & Send SMS</span>
+</button>
+<button class="flex items-center gap-xs px-md py-2.5 rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>Reschedule</span>
+</button>
+<button class="flex items-center gap-xs px-sm py-2.5 rounded-xl text-error hover:bg-error-container transition-colors font-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 3 (Already Confirmed) -->
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-md opacity-90">
+<div class="flex flex-col sm:flex-row sm:items-center gap-md min-w-0">
+<div class="w-14 h-14 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="font-headline-md text-headline-md font-bold">MR</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-sm flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface">Mohamed Rifaz</span>
+<span class="px-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm font-bold flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">done</span>
+                Confirmed & SMS Sent
+              </span>
+</div>
+<div class="flex items-center gap-md mt-xs flex-wrap font-body-md text-body-md text-on-surface-variant">
+<span class="flex items-center gap-xs text-on-surface font-semibold">
+<span class="material-symbols-outlined text-[18px] text-secondary">call</span>
+                075 554 3210
+              </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-xs text-on-surface font-semibold">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                Today at 02:00 PM
+              </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">work_outline</span>
+                Interested In: <strong class="text-on-surface">Romania - Forklift Driver 🇷🇴</strong>
+</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-sm shrink-0 flex-wrap">
+<button class="flex items-center gap-xs px-md py-2.5 rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span>View Candidate Dossier</span>
+</button>
+<button class="flex items-center gap-xs px-md py-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-colors font-label-md font-bold" type="button">
+<span class="material-symbols-outlined text-[18px]">print</span>
+<span>Print Desk Slip</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Section: Active Jobs on Candidates' Mobile App -->
+<section class="flex flex-col gap-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-sm">
+<div>
+<div class="flex items-center gap-sm">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Active Jobs on Candidates' Mobile App</h2>
+<span class="px-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm font-bold">Live Synchronized</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Control what prospective job seekers can see and apply for on their mobile devices right now</p>
+</div>
+<button class="flex items-center gap-xs px-md py-2 rounded-xl bg-primary text-on-primary font-label-md font-bold hover:bg-primary-container transition-colors shrink-0" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>New Romania Vacancy</span>
+</button>
+</div>
+<!-- Job Cards Bento Mosaic -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Card 1: Open Vacancy -->
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex flex-col">
+<div class="flex items-start justify-between gap-sm mb-sm">
+<span class="px-sm py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm font-bold flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              OPEN (Visible in App)
+            </span>
+<span class="font-label-md text-label-md font-bold text-secondary">14 Slots Left</span>
+</div>
+<div class="flex items-center gap-xs mb-xs">
+<span class="text-[20px]">🇷🇴</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Romania • Brasov Hub</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight">Factory Packaging Worker</h3>
+<div class="mt-sm p-sm rounded-xl bg-surface-container-low flex flex-col gap-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-on-surface-variant">Monthly Net Salary</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">€750 – €900</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Free Food & Shared Apartment Included</span>
+</div>
+<!-- Waitlist counter bar -->
+<div class="mt-md flex flex-col gap-xs">
+<div class="flex items-center justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Candidate Waitlist</span>
+<span class="font-bold text-on-surface">128 Waiting</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary w-4/5 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="mt-lg pt-md border-t-0 flex flex-col gap-xs">
+<div class="flex items-center gap-xs">
+<button class="flex-1 py-2 px-sm rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md font-semibold text-center transition-colors" type="button">
+              Edit Job Details
+            </button>
+<button class="flex-1 py-2 px-sm rounded-xl bg-primary-container text-on-primary font-label-md font-bold text-center hover:bg-primary transition-colors" type="button">
+              View 128 Waiting
+            </button>
+</div>
+<button class="w-full py-1.5 text-center text-on-surface-variant hover:text-error font-label-sm transition-colors mt-xs" type="button">
+            Change to "Coming Soon" or Close
+          </button>
+</div>
+</div>
+<!-- Card 2: Coming Soon -->
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex flex-col">
+<div class="flex items-start justify-between gap-sm mb-sm">
+<span class="px-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm font-bold flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+              COMING SOON (Accepting Reminders)
+            </span>
+<span class="font-label-md text-label-md font-bold text-on-surface">8 Slots Pending</span>
+</div>
+<div class="flex items-center gap-xs mb-xs">
+<span class="text-[20px]">🇷🇴</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Romania • Bucharest Hub</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight">Hotel & Kitchen Assistant</h3>
+<div class="mt-sm p-sm rounded-xl bg-surface-container-low flex flex-col gap-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-on-surface-variant">Monthly Net Salary</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">€680 – €820</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Overtime available + Medical insurance</span>
+</div>
+<!-- Waitlist counter bar -->
+<div class="mt-md flex flex-col gap-xs">
+<div class="flex items-center justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Mobile Reminders Set</span>
+<span class="font-bold text-tertiary-container">85 Candidates Ready</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim w-3/5 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="mt-lg pt-md flex flex-col gap-xs">
+<button class="w-full py-2.5 px-md rounded-xl bg-secondary text-on-secondary hover:bg-secondary-fixed-dim hover:text-on-secondary-fixed transition-all font-label-md font-bold flex items-center justify-center gap-xs shadow-sm" onclick="openJobWithAlert(this)" type="button">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+<span>Open Job & Alert 85 Candidates</span>
+</button>
+<button class="w-full py-1.5 text-center text-on-surface-variant hover:text-on-surface font-label-sm transition-colors mt-xs" type="button">
+            Edit Information Draft
+          </button>
+</div>
+</div>
+<!-- Card 3: Closed Vacancy -->
+<div class="p-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between opacity-85">
+<div class="flex flex-col">
+<div class="flex items-start justify-between gap-sm mb-sm">
+<span class="px-sm py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm font-bold flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+              CLOSED (Filled)
+            </span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">0 Slots Left</span>
+</div>
+<div class="flex items-center gap-xs mb-xs">
+<span class="text-[20px]">🇷🇴</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Romania • Cluj Region</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight">Agricultural & Greenhouse Worker</h3>
+<div class="mt-sm p-sm rounded-xl bg-surface-container-low flex flex-col gap-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-on-surface-variant">Monthly Net Salary</span>
+<span class="font-headline-md text-headline-md text-on-surface-variant font-bold">€700</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Quota completed • Visa processing stage</span>
+</div>
+<div class="mt-md p-sm rounded-xl bg-surface-container-high flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">task_alt</span>
+<span class="font-body-sm text-body-sm text-on-surface">All 25 candidates submitted to Embassy</span>
+</div>
+</div>
+<div class="mt-lg pt-md flex flex-col gap-xs">
+<button class="w-full py-2.5 px-md rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-md font-semibold flex items-center justify-center gap-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+<span>Re-open for Next Batch</span>
+</button>
+<button class="w-full py-1.5 text-center text-on-surface-variant hover:text-on-surface font-label-sm transition-colors mt-xs" type="button">
+            View Approved Candidate Archive
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Instant Feedback Notification Toast Modal (Hidden by Default) -->
+<div class="fixed bottom-8 right-8 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="action-toast">
+<div class="p-md rounded-xl bg-primary text-on-primary shadow-xl flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">done</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-primary" id="toast-title">Action Completed</span>
+<span class="font-body-sm text-body-sm text-surface-container-highest" id="toast-desc">Candidate has been updated</span>
+</div>
+</div>
+</div>
+<script>
+    function confirmAppointment(elementId, candidateName, phone) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+
+      // Visual transformation
+      el.classList.add('bg-surface-container-low');
+      const actionContainer = el.querySelector('.shrink-0.flex-wrap');
+      if (actionContainer) {
+        actionContainer.innerHTML = `
+          <span class="flex items-center gap-xs text-secondary font-label-md font-bold px-md py-2">
+            <span class="material-symbols-outlined text-[20px]">verified</span>
+            Confirmed & SMS Sent
+          </span>
+          <button type="button" class="flex items-center gap-xs px-md py-2.5 rounded-xl bg-primary text-on-primary font-label-md font-bold">
+            <span class="material-symbols-outlined text-[18px]">print</span>
+            <span>Print Slip</span>
+          </button>
+        `;
+      }
+
+      // Update badge
+      const badge = el.querySelector('.bg-error-container');
+      if (badge) {
+        badge.className = 'px-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm font-bold';
+        badge.textContent = 'Confirmed ✅';
+      }
+
+      showToast('Appointment Confirmed!', `SMS notification sent to ${candidateName} (${phone})`);
+    }
+
+    function openJobWithAlert(buttonEl) {
+      buttonEl.innerHTML = `<span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span><span>Alerting Candidates...</span>`;
+      setTimeout(() => {
+        buttonEl.className = "w-full py-2.5 px-md rounded-xl bg-surface-container-high text-secondary font-label-md font-bold flex items-center justify-center gap-xs";
+        buttonEl.innerHTML = `<span class="material-symbols-outlined text-[20px]">done_all</span><span>Live! 85 SMS Sent</span>`;
+        showToast('Vacancy is now Live!', '85 interested candidates just received mobile phone alerts.');
+      }, 700);
+    }
+
+    function showToast(title, desc) {
+      const toast = document.getElementById('action-toast');
+      const tTitle = document.getElementById('toast-title');
+      const tDesc = document.getElementById('toast-desc');
+      if (!toast) return;
+
+      tTitle.textContent = title;
+      tDesc.textContent = desc;
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 4000);
+    }
+  </script>
+</div></main></div></body></html>

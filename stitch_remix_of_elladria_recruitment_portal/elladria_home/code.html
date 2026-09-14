@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Elladria - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "outline": "#76777d",
+                        "secondary": "#006a61",
+                        "on-secondary-container": "#006f66",
+                        "on-tertiary-fixed": "#2f1500",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container": "#e5eeff",
+                        "secondary-container": "#86f2e4",
+                        "tertiary-container": "#2f1500",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-container": "#7c839b",
+                        "primary-fixed": "#dae2fd",
+                        "surface": "#f8f9ff",
+                        "on-secondary-fixed": "#00201d",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "tertiary-fixed": "#ffdcc3",
+                        "outline-variant": "#c6c6cd",
+                        "error": "#ba1a1a",
+                        "primary-container": "#131b2e",
+                        "secondary-fixed": "#89f5e7",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#c76c00",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "inverse-primary": "#bec6e0",
+                        "tertiary": "#000000",
+                        "on-surface": "#0b1c30",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-background": "#0b1c30",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#45464d",
+                        "primary-fixed-dim": "#bec6e0",
+                        "primary": "#000000",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "sm": "12px",
+                        "gutter": "20px",
+                        "xl": "32px",
+                        "margin-desktop": "40px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col pt-16 pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface dark:bg-on-primary-container shadow-sm docked full-width top-0 transition-colors duration-200">
+<button class="text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-primary-container p-2 rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-surface-bright">Elladria</h1>
+<button class="text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-primary-container p-2 rounded-full transition-colors duration-200 relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-lg space-y-xl">
+<!-- Hero Section -->
+<section class="bg-surface-container-high rounded-xl p-lg relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-sm max-w-lg">
+                    Find Your Opportunity in Romania 🇷🇴
+                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-md">
+                    Secure your future with verified jobs, streamlined visa processing, and dedicated relocation support.
+                </p>
+<div class="relative w-full max-w-xl">
+<span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-on-surface-variant z-10" data-icon="search">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-full font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-[0_1px_3px_rgba(0,0,0,0.05)]" placeholder="Search for jobs, skills, or locations..." type="text"/>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute right-0 bottom-0 w-64 h-64 bg-primary-fixed rounded-full blur-3xl opacity-50 transform translate-x-1/4 translate-y-1/4"></div>
+<div class="absolute right-12 top-0 w-32 h-32 bg-secondary-fixed rounded-full blur-2xl opacity-40 transform translate-y-1/4"></div>
+</section>
+<!-- Quick Actions Bento Grid -->
+<section>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Quick Actions</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-sm md:gap-md">
+<a class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-md flex flex-col items-center justify-center gap-sm shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow group" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="public">public</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface text-center">Browse Countries</span>
+</a>
+<a class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-md flex flex-col items-center justify-center gap-sm shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow group" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-secondary" data-icon="work">work</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface text-center">New Vacancies</span>
+</a>
+<a class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-md flex flex-col items-center justify-center gap-sm shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow group" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="bookmark">bookmark</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface text-center">Saved Jobs</span>
+</a>
+<a class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-md flex flex-col items-center justify-center gap-sm shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow group" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-tertiary-fixed transition-colors">
+<span class="material-symbols-outlined text-tertiary" data-icon="alarm">alarm</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface text-center">My Reminders</span>
+</a>
+<a class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-md flex flex-col items-center justify-center gap-sm shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow group col-span-2 md:col-span-1" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-secondary" data-icon="event_available">event_available</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface text-center">Office Appts</span>
+</a>
+</div>
+</section>
+<!-- Featured Vacancy -->
+<section>
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Featured Vacancy</h3>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-lg shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-md transition-shadow flex flex-col md:flex-row gap-lg md:items-center">
+<div class="flex-shrink-0 w-16 h-16 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist abstract logo for a European manufacturing company. The logo uses a geometric, structured design in deep navy and subtle grey tones on a pristine white background. High contrast, professional, corporate modern style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwt7JGxxRZInlCgJfOzBswGAnXTYPtEiikTy3YYTSD-ZlhwJ0S7yqBDvFIzUr7PBEUULmzPhN5u7Q-53Bu7CBxltCzmqa1CqvqjVBAAM4Ghr5BtyyPj0guSuD3PjJPYCkr3GCHPolZab_s48sOSKQycFNDKmPyUC1WAjRID4BLjyTIDlssE9YQszV4i0XKAw3yWusNH1DxuOIYvLbjaGPiZ4Lt2GtaMZ-UwwYMXt7nIRbneRdtZPM"/>
+</div>
+<div class="flex-grow space-y-2">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Factory Worker</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+                                Romania 🇷🇴
+                            </p>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded-md bg-[#d1fae5] text-[#065f46] font-label-sm text-label-sm">
+                            Open
+                        </span>
+</div>
+<div class="flex flex-wrap gap-sm pt-sm border-t border-outline-variant/20">
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-low px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="payments">payments</span>
+                            €850 - €1,200 / mo
+                        </div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-low px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="calendar_today">calendar_today</span>
+                            Posted Aug 30
+                        </div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-low px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="apartment">apartment</span>
+                            Accomodation Provided
+                        </div>
+</div>
+</div>
+<div class="flex flex-col gap-sm md:w-48 flex-shrink-0 mt-4 md:mt-0">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-full hover:bg-inverse-surface transition-colors">
+                        Apply Now
+                    </button>
+<button class="w-full bg-surface-container-lowest border-2 border-primary text-primary font-label-md text-label-md py-2.5 px-4 rounded-full hover:bg-surface-container-low transition-colors">
+                        Save for Later
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container-lowest dark:bg-primary-container shadow-[0_-1px_3px_rgba(0,0,0,0.05)] docked full-width bottom-0 md:hidden">
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-label-sm text-label-sm mt-1">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
+<span class="font-label-sm text-label-sm mt-1">Appts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+<!-- Side Nav / Top Nav links for Desktop could go here, but focusing on mobile/responsive layout requested -->
+</body></html>

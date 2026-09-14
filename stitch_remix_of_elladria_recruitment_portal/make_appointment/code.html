@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Elladria - Book Appointment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-fixed-variant": "#005049",
+                      "on-primary-fixed": "#131b2e",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "surface-bright": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "outline": "#76777d",
+                      "secondary": "#006a61",
+                      "on-secondary-container": "#006f66",
+                      "on-tertiary-fixed": "#2f1500",
+                      "surface-variant": "#d3e4fe",
+                      "surface-container": "#e5eeff",
+                      "secondary-container": "#86f2e4",
+                      "tertiary-container": "#2f1500",
+                      "inverse-surface": "#213145",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "surface-container-low": "#eff4ff",
+                      "on-primary-container": "#7c839b",
+                      "primary-fixed": "#dae2fd",
+                      "surface": "#f8f9ff",
+                      "on-secondary-fixed": "#00201d",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#565e74",
+                      "tertiary-fixed": "#ffdcc3",
+                      "outline-variant": "#c6c6cd",
+                      "error": "#ba1a1a",
+                      "primary-container": "#131b2e",
+                      "secondary-fixed": "#89f5e7",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#c76c00",
+                      "on-tertiary-fixed-variant": "#6e3900",
+                      "inverse-primary": "#bec6e0",
+                      "tertiary": "#000000",
+                      "on-surface": "#0b1c30",
+                      "surface-dim": "#cbdbf5",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-background": "#0b1c30",
+                      "surface-container-high": "#dce9ff",
+                      "on-surface-variant": "#45464d",
+                      "primary-fixed-dim": "#bec6e0",
+                      "primary": "#000000",
+                      "on-error": "#ffffff",
+                      "background": "#f8f9ff",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "sm": "12px",
+                      "gutter": "20px",
+                      "xl": "32px",
+                      "margin-desktop": "40px",
+                      "md": "16px",
+                      "margin-mobile": "16px",
+                      "lg": "24px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "headline-xl": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+          font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Minimalist Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col pt-16 pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-primary-container shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-surface-bright">Elladria</h1>
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col items-center justify-start p-margin-mobile md:p-margin-desktop w-full max-w-[1200px] mx-auto gap-lg">
+<!-- Header Section -->
+<div class="w-full max-w-2xl text-center mb-md">
+<h2 class="font-headline-xl text-headline-xl text-primary mb-xs">Book an Appointment</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Schedule your visit to one of our regional offices for visa processing or consultation.</p>
+</div>
+<!-- Progress Tracker (Desktop mainly, simplified on mobile) -->
+<div class="w-full max-w-3xl flex justify-between items-center mb-xl relative hidden md:flex px-xl">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-surface-container-highest -z-10 translate-y-[-50%]"></div>
+<div class="flex flex-col items-center bg-surface px-sm gap-xs">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-label-md">1</div>
+<span class="font-label-sm text-label-sm text-on-surface">Location</span>
+</div>
+<div class="flex flex-col items-center bg-surface px-sm gap-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant text-on-surface-variant flex items-center justify-center font-label-md">2</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Date &amp; Time</span>
+</div>
+<div class="flex flex-col items-center bg-surface px-sm gap-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant text-on-surface-variant flex items-center justify-center font-label-md">3</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Details</span>
+</div>
+</div>
+<!-- Form Container -->
+<div class="w-full max-w-3xl bg-surface-container-lowest rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-outline-variant/30 p-lg md:p-xl flex flex-col gap-xl">
+<!-- Step 1: Select Office -->
+<section class="flex flex-col gap-sm">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-secondary">location_on</span>
+<h3 class="font-headline-md text-headline-md">Select Office Location</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Option 1 -->
+<label class="cursor-pointer relative group">
+<input checked="" class="peer sr-only" name="office" type="radio" value="colombo"/>
+<div class="h-full border border-outline-variant rounded-lg p-md peer-checked:border-secondary peer-checked:bg-secondary-container/20 transition-all hover:bg-surface-container flex flex-col gap-xs">
+<span class="font-label-md text-label-md font-bold text-on-surface">Colombo HQ</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">World Trade Center, Echelon Square</span>
+</div>
+<div class="absolute top-md right-md opacity-0 peer-checked:opacity-100 text-secondary transition-opacity">
+<span class="material-symbols-outlined fill">check_circle</span>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="cursor-pointer relative group">
+<input class="peer sr-only" name="office" type="radio" value="kandy"/>
+<div class="h-full border border-outline-variant rounded-lg p-md peer-checked:border-secondary peer-checked:bg-secondary-container/20 transition-all hover:bg-surface-container flex flex-col gap-xs">
+<span class="font-label-md text-label-md font-bold text-on-surface">Kandy Branch</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Dalada Vidiya, Kandy City Center</span>
+</div>
+<div class="absolute top-md right-md opacity-0 peer-checked:opacity-100 text-secondary transition-opacity">
+<span class="material-symbols-outlined fill">check_circle</span>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="cursor-pointer relative group">
+<input class="peer sr-only" name="office" type="radio" value="galle"/>
+<div class="h-full border border-outline-variant rounded-lg p-md peer-checked:border-secondary peer-checked:bg-secondary-container/20 transition-all hover:bg-surface-container flex flex-col gap-xs">
+<span class="font-label-md text-label-md font-bold text-on-surface">Galle Branch</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Galle Fort, Pedlar Street</span>
+</div>
+<div class="absolute top-md right-md opacity-0 peer-checked:opacity-100 text-secondary transition-opacity">
+<span class="material-symbols-outlined fill">check_circle</span>
+</div>
+</label>
+</div>
+</section>
+<hr class="border-t border-surface-container-highest w-full"/>
+<!-- Step 2 & 3: Date and Time -->
+<section class="flex flex-col md:flex-row gap-lg w-full">
+<!-- Date Picker Area -->
+<div class="flex-1 flex flex-col gap-sm">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-secondary">calendar_today</span>
+<h3 class="font-headline-md text-headline-md">Select Date</h3>
+</div>
+<!-- Mock Calendar -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md">
+<div class="flex justify-between items-center mb-md">
+<button class="p-xs rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">chevron_left</span></button>
+<span class="font-label-md text-label-md font-bold">November 2023</span>
+<button class="p-xs rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-7 gap-xs text-center mb-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Su</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mo</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tu</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">We</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Th</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Fr</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sa</span>
+</div>
+<div class="grid grid-cols-7 gap-xs text-center font-body-sm text-body-sm">
+<div class="p-xs text-outline-variant">29</div>
+<div class="p-xs text-outline-variant">30</div>
+<div class="p-xs text-outline-variant">31</div>
+<button class="p-xs rounded-full hover:bg-surface-container">1</button>
+<button class="p-xs rounded-full hover:bg-surface-container">2</button>
+<button class="p-xs rounded-full hover:bg-surface-container">3</button>
+<button class="p-xs rounded-full hover:bg-surface-container">4</button>
+<button class="p-xs rounded-full hover:bg-surface-container">5</button>
+<button class="p-xs rounded-full hover:bg-surface-container">6</button>
+<button class="p-xs rounded-full hover:bg-surface-container">7</button>
+<button class="p-xs rounded-full hover:bg-surface-container">8</button>
+<button class="p-xs rounded-full hover:bg-surface-container">9</button>
+<button class="p-xs rounded-full bg-secondary text-on-secondary font-bold shadow-md">10</button>
+<button class="p-xs rounded-full hover:bg-surface-container">11</button>
+</div>
+</div>
+</div>
+<!-- Time Slots Area -->
+<div class="flex-1 flex flex-col gap-sm">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-secondary">schedule</span>
+<h3 class="font-headline-md text-headline-md">Select Time</h3>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<label class="cursor-pointer group">
+<input class="peer sr-only" disabled="" name="time" type="radio" value="0900"/>
+<div class="border border-outline-variant/30 bg-surface-container-lowest text-outline-variant rounded-lg p-sm text-center peer-disabled:opacity-50 peer-disabled:cursor-not-allowed">
+<span class="font-body-md text-body-md">09:00 AM</span>
+</div>
+</label>
+<label class="cursor-pointer group">
+<input checked="" class="peer sr-only" name="time" type="radio" value="1000"/>
+<div class="border border-outline-variant rounded-lg p-sm text-center peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-colors hover:bg-surface-container">
+<span class="font-body-md text-body-md">10:00 AM</span>
+</div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="time" type="radio" value="1030"/>
+<div class="border border-outline-variant rounded-lg p-sm text-center peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-colors hover:bg-surface-container">
+<span class="font-body-md text-body-md">10:30 AM</span>
+</div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="time" type="radio" value="1130"/>
+<div class="border border-outline-variant rounded-lg p-sm text-center peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-colors hover:bg-surface-container">
+<span class="font-body-md text-body-md">11:30 AM</span>
+</div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="time" type="radio" value="1400"/>
+<div class="border border-outline-variant rounded-lg p-sm text-center peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-colors hover:bg-surface-container">
+<span class="font-body-md text-body-md">02:00 PM</span>
+</div>
+</label>
+</div>
+</div>
+</section>
+<hr class="border-t border-surface-container-highest w-full"/>
+<!-- Step 4: Reason -->
+<section class="flex flex-col gap-sm">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-secondary">edit_note</span>
+<h3 class="font-headline-md text-headline-md">Reason for Appointment</h3>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="reason">Purpose of Visit</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow appearance-none" id="reason">
+<option value="visa_consultation">Visa Consultation</option>
+<option value="document_submission">Document Submission</option>
+<option value="interview_prep">Interview Preparation</option>
+<option value="other">Other Inquiry</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs mt-sm">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="notes">Additional Notes (Optional)</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow resize-none" id="notes" placeholder="Briefly describe what you'd like to discuss..." rows="3"></textarea>
+</div>
+</section>
+<!-- Action -->
+<div class="pt-sm flex justify-end w-full">
+<button class="bg-primary text-on-primary px-xl py-sm rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-sm w-full md:w-auto">
+                    Confirm Appointment
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-primary-container shadow-[0_-1px_3px_rgba(0,0,0,0.05)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-sm text-label-sm">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">event_available</span>
+<span class="font-label-sm text-label-sm">Appts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+</body></html>
