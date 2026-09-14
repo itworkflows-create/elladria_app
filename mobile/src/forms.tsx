@@ -126,8 +126,10 @@ export function Booking({
     time: string,
     reason: string,
     notes: string,
-  ) => void;
+  ) => void | Promise<void>;
 }) {
+  const [saving, setSaving] = useState(false);
+  const [bookingError, setBookingError] = useState("");
   const dates = availableDates();
   const [office, setOffice] = useState(offices[0].name);
   const [date, setDate] = useState(dates[0]);
@@ -158,8 +160,8 @@ export function Booking({
   return (
     <>
       <Text style={s.body}>
-        Select a convenient office and time for your demo visit. All times are
-        in Sri Lanka time.
+        Select a convenient office and time for your visit. All times are in Sri
+        Lanka time.
       </Text>
       <Text style={s.h2}>1. {t("Select Office Location")}</Text>
       {offices.map((item) => (
@@ -254,7 +256,7 @@ export function Booking({
         placeholder="What would you like to discuss?"
       />
       <Card>
-        <Text style={s.h2}>Your demo visit</Text>
+        <Text style={s.h2}>Your visit</Text>
         <Text style={s.body}>
           {office} · {dateLabel(date, state.language)}
         </Text>
@@ -263,14 +265,28 @@ export function Booking({
         </Text>
       </Card>
       <Button
-        title={t("Confirm Demo Appointment")}
-        disabled={!time || !canBook(state.appointments, office, date, time)}
-        onPress={() => onBooked(office, date, time, reason, notes.trim())}
+        title={saving ? "Booking…" : "Confirm Appointment"}
+        disabled={
+          saving || !time || !canBook(state.appointments, office, date, time)
+        }
+        onPress={() => {
+          setBookingError("");
+          setSaving(true);
+          Promise.resolve()
+            .then(() => onBooked(office, date, time, reason, notes.trim()))
+            .catch((error) => setBookingError(error.message))
+            .finally(() => setSaving(false));
+        }}
         icon="checkmark-circle-outline"
       />
+      {!!bookingError && (
+        <Text accessibilityRole="alert" style={s.error}>
+          {bookingError}
+        </Text>
+      )}
       <Text style={s.small}>
-        This does not reserve a real appointment. Addresses are taken from the
-        supplied design and have not been verified.
+        This booking is shared with the local admin. Addresses are taken from
+        the supplied design and have not been verified.
       </Text>
     </>
   );

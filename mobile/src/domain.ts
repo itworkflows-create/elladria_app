@@ -27,6 +27,7 @@ export const initialState: DemoState = {
   appointments: [],
 };
 export type Job = {
+  imageId?: string;
   id: string;
   title: string;
   company: string;

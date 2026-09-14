@@ -68,6 +68,10 @@ export function validateJob(value: unknown): Job {
     throw new Error("Featured must be true or false.");
   return {
     id,
+    imageId:
+      typeof job.imageId === "string" && /^[a-f0-9-]{36}$/.test(job.imageId)
+        ? job.imageId
+        : undefined,
     title: required("title", 120),
     company: required("company", 160),
     city: required("city", 100),

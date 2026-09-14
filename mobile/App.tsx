@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
+  Image,
   Alert,
   BackHandler,
   KeyboardAvoidingView,
@@ -31,6 +32,13 @@ import {
 import { translate } from "./src/i18n";
 import { Button, Card, Empty, Icon, C, s, type IconName } from "./src/ui";
 import { Booking, Registration, dateLabel } from "./src/forms";
+import { useCustomer } from "./src/useCustomer";
+import {
+  CustomerAuth,
+  CustomerProfileView,
+  CustomerAppointments,
+} from "./src/CustomerScreens";
+import { apiBase } from "./src/api";
 import { useCatalog } from "./src/useCatalog";
 import AdminPanel from "./src/AdminPanel";
 type Screen =
@@ -63,6 +71,8 @@ export default function App() {
   );
 }
 function MobileApp() {
+  const customer = useCustomer();
+  const [applying, setApplying] = useState(false);
   const { catalog, connection } = useCatalog();
   const jobs = catalog.jobs;
   const featuredJob = jobs.find((item) => item.featured) ?? jobs[0];
@@ -146,32 +156,39 @@ function MobileApp() {
   const toggle = (key: "saved" | "reminders", id: string) =>
     setState((prev) => ({ ...prev, [key]: toggleItem(prev[key], id) }));
   const requireProfile = (next: Route) => {
-    if (state.profile) nav(next.screen, next.jobId);
+    if (customer.data) nav(next.screen, next.jobId);
     else {
       setPending(next);
       nav("register");
     }
   };
-  const apply = () => {
-    if (!job) {
-      notify("This job is no longer available.");
-      return;
-    }
-    if (!state.profile) {
+  const apply = async () => {
+    if (!job || applying) return;
+    if (!customer.data) {
       setPending({ screen: "details", jobId: job.id });
       nav("register");
       return;
     }
-    setState((prev) => ({
-      ...prev,
-      applications: prev.applications.includes(job.id)
-        ? prev.applications
-        : [...prev.applications, job.id],
-    }));
-    notify("Demo application saved. Nothing was sent to an employer.");
+    setApplying(true);
+    try {
+      await customer.action("/applications", { jobId: job.id });
+      notify("Application submitted to the recruitment team.");
+    } catch (error) {
+      notify((error as Error).message);
+    } finally {
+      setApplying(false);
+    }
   };
   const jobCard = (item: Job) => (
     <Card key={item.id}>
+      {item.imageId && (
+        <Image
+          source={{ uri: apiBase() + "/api/images/" + item.imageId }}
+          style={{ width: "100%", height: 170, borderRadius: 10 }}
+          accessibilityLabel={item.title}
+          resizeMode="cover"
+        />
+      )}
       <View style={s.row}>
         <View style={s.companyIcon}>
           <Icon name={item.icon} size={30} />
@@ -278,7 +295,7 @@ function MobileApp() {
               : connection === "loading"
                 ? "Loading catalog…"
                 : "Offline catalog"}{" "}
-            · Local bookings
+            · Connected accounts
           </Text>
         </View>
       )}
@@ -557,6 +574,14 @@ function MobileApp() {
           {screen === "details" && job && (
             <>
               <View style={s.detailHero}>
+                {job.imageId && (
+                  <Image
+                    source={{ uri: apiBase() + "/api/images/" + job.imageId }}
+                    style={{ width: "100%", height: 180, borderRadius: 8 }}
+                    accessibilityLabel={job.title}
+                    resizeMode="cover"
+                  />
+                )}
                 <View style={s.between}>
                   <Text style={s.badge}>SAMPLE VACANCY</Text>
                   <Pressable
@@ -654,24 +679,22 @@ function MobileApp() {
             />
           )}
           {screen === "register" && (
-            <Registration
-              t={t}
-              onSave={(profile) => {
-                setState((prev) => ({ ...prev, profile }));
-                if (pending) {
-                  const next = pending;
-                  setPending(null);
+            <CustomerAuth
+              customer={customer}
+              onSuccess={() => {
+                const next = pending;
+                setPending(null);
+                if (next)
                   setRoutes((prev) => {
                     const base = prev.slice(0, -1);
-                    const last = base[base.length - 1];
-                    return last?.screen === next.screen &&
-                      last?.jobId === next.jobId
+                    return base.at(-1)?.screen === next.screen &&
+                      base.at(-1)?.jobId === next.jobId
                       ? base
                       : [...base, next];
                   });
-                } else back();
+                else back();
                 notify(
-                  "Demo profile created on this device. No account was registered.",
+                  "Signed in. Your account is connected to the admin team.",
                 );
               }}
             />
@@ -679,251 +702,72 @@ function MobileApp() {
           {screen === "booking" && (
             <Booking
               t={t}
-              state={state}
-              onBooked={(office, date, time, reason, notes) => {
-                if (!state.profile) {
-                  requireProfile({ screen: "booking" });
-                  return;
-                }
-                if (!canBook(state.appointments, office, date, time)) {
-                  notify(
-                    "That demo time is unavailable. Please select another time.",
-                  );
-                  return;
-                }
-                setState((prev) => ({
-                  ...prev,
-                  appointments: [
-                    ...prev.appointments,
-                    {
-                      id: `DEMO-${Date.now().toString(36).toUpperCase()}`,
-                      office,
-                      date,
-                      time,
-                      reason,
-                      notes,
-                      candidate: prev.profile!.name,
-                      status: "Upcoming",
-                    },
-                  ],
-                }));
+              state={{
+                ...state,
+                profile: customer.data?.profile ?? null,
+                appointments: customer.data?.appointments ?? [],
+              }}
+              onBooked={async (office, date, time, reason, notes) => {
+                await customer.action("/appointments", {
+                  office,
+                  date,
+                  time,
+                  reason,
+                  notes,
+                });
                 tab("appointments");
-                notify(
-                  "Demo appointment saved. No real office booking was made.",
-                );
+                notify("Appointment booked and shared with the admin team.");
               }}
             />
           )}
           {screen === "appointments" && (
-            <>
-              <Text style={s.body}>
-                Meet the team and plan your next step. These bookings are stored
-                only on this device.
-              </Text>
-              <Button
-                title={t("Make Appointment")}
-                icon="add"
-                onPress={() => requireProfile({ screen: "booking" })}
-              />
-              {state.appointments.length === 0 && (
-                <Empty
-                  icon="calendar-outline"
-                  title={t("No appointments yet")}
-                  detail="Choose an office, date, and time to try the booking flow."
-                />
-              )}
-              {[...state.appointments]
-                .sort((a, b) =>
-                  `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`),
-                )
-                .map((item) => (
-                  <Card key={item.id}>
-                    <View style={s.between}>
-                      <Text style={[s.h2, s.flex]}>{item.office}</Text>
-                      <Text
-                        style={[
-                          s.badge,
-                          item.status === "Cancelled" && {
-                            backgroundColor: "#f2f2f2",
-                            color: C.muted,
-                          },
-                        ]}
-                      >
-                        {t(item.status)}
-                      </Text>
-                    </View>
-                    <Text style={s.label}>
-                      {dateLabel(item.date, state.language)} · {item.time}
-                    </Text>
-                    <Text style={s.body}>{t(item.reason)}</Text>
-                    {!!item.notes && <Text style={s.body}>{item.notes}</Text>}
-                    <Text style={s.small}>{item.id} · Sri Lanka time</Text>
-                    {item.status === "Upcoming" && (
-                      <Button
-                        secondary
-                        title={t("Cancel")}
-                        onPress={() =>
-                          Alert.alert(
-                            "Cancel demo appointment?",
-                            "This removes the appointment from your upcoming demo visits.",
-                            [
-                              { text: "Keep appointment", style: "cancel" },
-                              {
-                                text: "Cancel appointment",
-                                style: "destructive",
-                                onPress: () =>
-                                  setState((prev) => ({
-                                    ...prev,
-                                    appointments: prev.appointments.map(
-                                      (appt) =>
-                                        appt.id === item.id
-                                          ? { ...appt, status: "Cancelled" }
-                                          : appt,
-                                    ),
-                                  })),
-                              },
-                            ],
-                          )
-                        }
-                      />
-                    )}
-                  </Card>
-                ))}
-            </>
+            <CustomerAppointments
+              customer={customer}
+              language={state.language}
+              onBook={() => requireProfile({ screen: "booking" })}
+              onSignIn={() => {
+                setPending({ screen: "appointments" });
+                nav("register");
+              }}
+            />
           )}
           {screen === "profile" && (
             <>
-              {state.profile ? (
-                <Card>
-                  <View style={s.iconCircle}>
-                    <Icon name="person-outline" color={C.teal} size={30} />
-                  </View>
-                  <Text style={s.h1}>{state.profile.name}</Text>
-                  <Text style={s.body}>{state.profile.email}</Text>
-                  <Text style={s.body}>{state.profile.phone}</Text>
-                  <Text style={s.badge}>LOCAL DEMO PROFILE</Text>
-                </Card>
-              ) : (
-                <>
-                  <Empty
-                    icon="person-outline"
-                    title={t("Create Your Profile")}
-                    detail="Try applications and office appointments with a local demo profile."
-                  />
-                  <Button
-                    title={t("Create Demo Profile")}
-                    onPress={() => {
-                      setPending(null);
-                      nav("register");
-                    }}
-                  />
-                </>
-              )}
-              <Card>
-                <Text style={s.h2}>{t("My Applications")}</Text>
-                {state.applications.length === 0 ? (
-                  <Text style={s.body}>
-                    Your demo applications will appear here.
-                  </Text>
-                ) : (
-                  jobs
-                    .filter((item) => state.applications.includes(item.id))
-                    .map((item) => (
-                      <Pressable
-                        key={item.id}
-                        accessibilityRole="button"
-                        style={s.listRow}
-                        onPress={() => nav("details", item.id)}
-                      >
-                        <View style={s.flex}>
-                          <Text style={s.label}>{item.title}</Text>
-                          <Text style={s.small}>
-                            Saved locally · Not submitted
-                          </Text>
-                        </View>
-                        <Icon name="chevron-forward" />
-                      </Pressable>
-                    ))
-                )}
-              </Card>
-              {state.applications.some(
-                (id) => !jobs.some((item) => item.id === id),
-              ) && (
-                <Card>
-                  <Text style={s.label}>Previous applications</Text>
-                  <Text style={s.body}>
-                    {
-                      state.applications.filter(
-                        (id) => !jobs.some((item) => item.id === id),
-                      ).length
-                    }{" "}
-                    locally saved application(s) refer to jobs that are no
-                    longer published. Your application records are kept on this
-                    device.
-                  </Text>
-                </Card>
-              )}
-              {(catalog.content.supportEmail ||
-                catalog.content.supportPhone) && (
-                <Card>
-                  <Text style={s.h2}>Contact Elladria</Text>
-                  {!!catalog.content.supportEmail && (
-                    <Text selectable style={s.body}>
-                      {catalog.content.supportEmail}
-                    </Text>
-                  )}
-                  {!!catalog.content.supportPhone && (
-                    <Text selectable style={s.body}>
-                      {catalog.content.supportPhone}
-                    </Text>
-                  )}
-                </Card>
-              )}
+              <CustomerProfileView
+                customer={customer}
+                onSignIn={() => {
+                  setPending(null);
+                  nav("register");
+                }}
+              />
               <Button
                 title={t("Saved Jobs")}
                 secondary
-                icon="bookmark-outline"
                 onPress={() => nav("saved")}
               />
               <Button
                 title={t("Change Language")}
                 secondary
-                icon="language-outline"
                 onPress={() => nav("language")}
               />
-              <Button
-                title="Demo appointment activity"
-                secondary
-                icon="people-outline"
-                onPress={() => nav("staff")}
-              />
-              <Text style={s.small}>
-                Demo mode does not create a real account or contact an employer.
-                Use fictional personal details. Staff Preview is a public demo
-                screen, not a protected staff account.
-              </Text>
-              <Button
-                title="Reset demo data"
-                secondary
-                onPress={() =>
-                  Alert.alert(
-                    "Reset this demo?",
-                    "This clears the profile, saved jobs, applications, reminders, and appointments on this device.",
-                    [
-                      { text: "Keep data", style: "cancel" },
-                      {
-                        text: "Reset",
-                        style: "destructive",
-                        onPress: () => {
-                          setState(initialState);
-                          setPending(null);
-                          setRoutes([{ screen: "language" }]);
-                        },
-                      },
-                    ],
-                  )
-                }
-              />
+              {(catalog.content.supportEmail ||
+                catalog.content.supportPhone) && (
+                <Card>
+                  <Text style={s.h2}>Contact Elladria</Text>
+                  <Text selectable style={s.body}>
+                    {catalog.content.supportEmail}
+                  </Text>
+                  <Text selectable style={s.body}>
+                    {catalog.content.supportPhone}
+                  </Text>
+                </Card>
+              )}
+              {(state.profile || state.appointments.length > 0) && (
+                <Text style={s.small}>
+                  Earlier device-only demo records are preserved locally. They
+                  have not been uploaded to this account.
+                </Text>
+              )}
             </>
           )}
           {screen === "reminders" && (
@@ -1100,12 +944,15 @@ function MobileApp() {
         <View style={s.footer}>
           <Button
             title={
-              state.applications.includes(job.id)
+              customer.data?.applications.some((item) => item.jobId === job.id)
                 ? t("Applied")
                 : t("Apply Now")
             }
-            disabled={state.applications.includes(job.id)}
-            onPress={apply}
+            disabled={
+              applying ||
+              customer.data?.applications.some((item) => item.jobId === job.id)
+            }
+            onPress={() => void apply()}
             icon="arrow-forward"
           />
         </View>

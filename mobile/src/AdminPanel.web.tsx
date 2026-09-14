@@ -11,6 +11,7 @@ import {
 } from "./catalog";
 import type { Job } from "./domain";
 import "./admin.css";
+import { AdminActivityPanel, type ActivityPage } from "./AdminActivity.web";
 const paths: Record<string, string> = {
   grid: "M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z",
   jobs: "M8 7V4h8v3 M3 7h18v14H3z M3 12h18 M10 12v3h4v-3",
@@ -103,7 +104,15 @@ const blankJob = (): Job => ({
 });
 export default function AdminPanel() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
-  const [page, setPage] = useState<"overview" | "jobs" | "content">("overview");
+  const [page, setPage] = useState<
+    | "overview"
+    | "jobs"
+    | "content"
+    | "customers"
+    | "appointments"
+    | "applications"
+    | "documents"
+  >("overview");
   const [token, setToken] = useState("");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -490,7 +499,18 @@ export default function AdminPanel() {
             [
               { key: "overview", name: "Overview", icon: "grid" },
               { key: "jobs", name: "Jobs & vacancies", icon: "jobs" },
-              { key: "content", name: "App content", icon: "edit" },
+              {
+                key: "content",
+                name:
+                  page === "content"
+                    ? "App content"
+                    : page[0].toUpperCase() + page.slice(1),
+                icon: "edit",
+              },
+              { key: "customers", name: "Customers", icon: "globe" },
+              { key: "appointments", name: "Appointments", icon: "grid" },
+              { key: "applications", name: "Applications", icon: "jobs" },
+              { key: "documents", name: "Documents", icon: "edit" },
             ] as const
           ).map((item) => (
             <button
@@ -534,7 +554,9 @@ export default function AdminPanel() {
                 ? "Overview"
                 : page === "jobs"
                   ? "Jobs & vacancies"
-                  : "App content"}
+                  : page === "content"
+                    ? "App content"
+                    : page[0].toUpperCase() + page.slice(1)}
             </strong>
           </div>
           <div className="topbar-right">
@@ -576,17 +598,19 @@ export default function AdminPanel() {
                       ? "Your recruitment workspace"
                       : page === "jobs"
                         ? "Jobs & vacancies"
-                        : "App content"}
+                        : page === "content"
+                          ? "App content"
+                          : page[0].toUpperCase() + page.slice(1)}
                   </h1>
                   <p>
                     {page === "overview"
                       ? "Manage the opportunities and information your candidates see."
                       : page === "jobs"
                         ? "Create opportunities. Review the details. Publish when ready."
-                        : "Keep your home screen, announcements, and contact information up to date."}
+                        : "Manage the information and customer activity connected to your app."}
                   </p>
                 </div>
-                {page !== "content" ? (
+                {["overview", "jobs"].includes(page) ? (
                   <button className="btn primary" onClick={newJob}>
                     <Glyph name="plus" />
                     Create job
@@ -723,6 +747,19 @@ export default function AdminPanel() {
                     </section>
                   </div>
                 </>
+              )}
+              {[
+                "overview",
+                "customers",
+                "appointments",
+                "applications",
+                "documents",
+              ].includes(page) && (
+                <AdminActivityPanel
+                  page={page as ActivityPage}
+                  token={token}
+                  onNavigate={setPage}
+                />
               )}
               {page === "jobs" && (
                 <section className="panel">
@@ -1029,6 +1066,7 @@ export default function AdminPanel() {
           initial={editor.job}
           create={editor.create}
           revision={catalog!.revision}
+          token={token}
           busy={busy}
           onSave={saveJob}
           onClose={() => setEditor(null)}
@@ -1075,6 +1113,7 @@ export default function AdminPanel() {
   );
 }
 function JobEditor({
+  token,
   initial,
   create,
   revision,
@@ -1082,6 +1121,7 @@ function JobEditor({
   onSave,
   onClose,
 }: {
+  token: string;
   initial: Job;
   create: boolean;
   revision: number;
@@ -1095,6 +1135,34 @@ function JobEditor({
   );
   const [error, setError] = useState("");
   const originalRevision = useRef(revision);
+  const [uploading, setUploading] = useState(false);
+  async function uploadImage(file: File) {
+    setError("");
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Choose an image smaller than 5 MB.");
+      return;
+    }
+    setUploading(true);
+    try {
+      const response = await fetch("/api/admin/uploads", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": file.type,
+          "X-File-Name": encodeURIComponent(file.name),
+          "X-CSRF-Token": token,
+        },
+        body: file,
+      });
+      const result = await response.json();
+      if (!response.ok) throw Error(result.error);
+      setJob((previous) => ({ ...previous, imageId: result.id }));
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
   const dirty =
     JSON.stringify(job) !== JSON.stringify(initial) ||
     requirements !== initial.requirements.join("\n");
@@ -1149,7 +1217,7 @@ function JobEditor({
           <button
             className="icon-action"
             type="button"
-            disabled={busy}
+            disabled={busy || uploading}
             aria-label="Close job editor"
             onClick={close}
           >
@@ -1172,6 +1240,43 @@ function JobEditor({
           </div>
           <section>
             <h3>Job information</h3>
+            <div className="job-image-editor">
+              {job.imageId && (
+                <img
+                  src={"/api/admin/files/" + job.imageId}
+                  alt="Job image preview"
+                />
+              )}
+              <label>
+                Job image
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg"
+                  disabled={uploading || busy}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) void uploadImage(file);
+                    event.target.value = "";
+                  }}
+                />
+              </label>
+              <span className="upload-hint">
+                {uploading
+                  ? "Uploading image…"
+                  : "PNG or JPEG, up to 5 MB. Visible to customers after the job is published."}
+              </span>
+              {job.imageId && (
+                <button
+                  className="btn secondary"
+                  type="button"
+                  onClick={() =>
+                    setJob((previous) => ({ ...previous, imageId: undefined }))
+                  }
+                >
+                  Remove image from job
+                </button>
+              )}
+            </div>
             <p>Give candidates a clear picture of the opportunity.</p>
             {input("Job title", "title")}
             {input("Employer / company", "company", 160)}
@@ -1283,12 +1388,16 @@ function JobEditor({
           <button
             className="btn secondary"
             type="button"
-            disabled={busy}
+            disabled={busy || uploading}
             onClick={close}
           >
             Cancel
           </button>
-          <button className="btn primary" disabled={busy} type="submit">
+          <button
+            className="btn primary"
+            disabled={busy || uploading}
+            type="submit"
+          >
             <Glyph name="check" />
             {busy
               ? "Saving…"
