@@ -846,6 +846,23 @@ function MobileApp() {
                     ))
                 )}
               </Card>
+              {state.applications.some(
+                (id) => !jobs.some((item) => item.id === id),
+              ) && (
+                <Card>
+                  <Text style={s.label}>Previous applications</Text>
+                  <Text style={s.body}>
+                    {
+                      state.applications.filter(
+                        (id) => !jobs.some((item) => item.id === id),
+                      ).length
+                    }{" "}
+                    locally saved application(s) refer to jobs that are no
+                    longer published. Your application records are kept on this
+                    device.
+                  </Text>
+                </Card>
+              )}
               {(catalog.content.supportEmail ||
                 catalog.content.supportPhone) && (
                 <Card>

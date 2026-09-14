@@ -932,6 +932,28 @@ export default function AdminPanel() {
                       </div>
                     </section>
                     <div className="content-save">
+                      {contentDirty && (
+                        <button
+                          className="btn secondary"
+                          type="button"
+                          disabled={busy}
+                          onClick={() =>
+                            setConfirmation({
+                              title: "Discard content changes?",
+                              message:
+                                "Your unsaved content edits will be discarded and the latest saved version loaded.",
+                              label: "Discard & reload",
+                              run: async () => {
+                                setContentDirty(false);
+                                await reload();
+                                setConfirmation(null);
+                              },
+                            })
+                          }
+                        >
+                          Discard changes
+                        </button>
+                      )}
                       <span>
                         {contentDirty
                           ? "You have unpublished changes"

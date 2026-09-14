@@ -12,3 +12,9 @@ Verified on 2026-09-14 in this Windows workspace.
 - Dependency audit reports 10 moderate findings through Expo's build-tool dependency chain (`xcode` → `uuid`). The suggested automatic fix downgrades Expo to SDK 46, so it was not applied. See `audit-report.json`; recheck upstream before a production release.
 
 The source screenshots in this folder are browser renders of the shared native UI, not captures from an iPhone or Android device.
+
+## Admin extension
+
+Added the connected local job/content management panel. TypeScript and nine candidate/admin tests pass, including publication filtering, featured-job uniqueness, editing, archiving, deletion, stale-write rejection, server restart persistence, session/origin/CSRF checks, and managed-ID restoration. Web, iOS and Android exports succeed.
+
+The admin panel was opened through its local URL after a successful HTTP response. No admin browser interaction or physical-device validation is claimed. WebMCP is feature-detected but its browser contract is unverified. Candidate personal data and bookings remain local to each device; only job/catalog content is managed centrally.
