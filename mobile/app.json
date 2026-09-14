@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "Elladria",
+    "slug": "elladria-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.elladria.demo"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#131b2e",
+        "foregroundImage": "./assets/icon.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.elladria.demo"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["expo-font"]
+  }
+}
