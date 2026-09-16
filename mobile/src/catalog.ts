@@ -9,6 +9,7 @@ export type AppContent = {
   supportPhone: string;
 };
 export type Catalog = {
+  categories?: string[];
   revision: number;
   jobs: Job[];
   content: AppContent;

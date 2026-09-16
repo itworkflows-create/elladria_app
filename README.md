@@ -1,4 +1,17 @@
-﻿# Elladria app and admin
+# Elladria app and admin
+
+## Supabase cloud mode
+
+The app is now configured to use Supabase for candidate accounts, jobs, applications,
+appointments, private documents and staff login. Open http://localhost:8093/?admin=1
+and sign in with your assigned Supabase staff account. The cloud catalog starts empty;
+create and publish a job to make it appear in the candidate app. Local JSON data and
+local accounts are not automatically imported.
+
+See [Supabase setup and validation](supabase/README.md) for migration order, configuration,
+security tests, and remaining production work. The sections below describe the original
+local backend, which is retained for development when EXPO_PUBLIC_BACKEND=local.
+
 
 React Native + Expo + TypeScript mobile demo for iOS and Android, with a separate desktop admin interface built into the same web export. The original Stitch layouts are preserved.
 

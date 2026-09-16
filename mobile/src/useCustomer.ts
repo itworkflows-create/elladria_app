@@ -1,3 +1,5 @@
+import { cloudEnabled, supabase, watchSupabaseAppState } from "./supabase";
+import { cloudCustomerRequest, cloudAuthenticate, cloudCustomerData } from "./cloudApi";
 ﻿import { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
@@ -12,6 +14,7 @@ export function useCustomer() {
     alive = useRef(true),
     generation = useRef(0);
   async function request(route: string, init: RequestInit = {}) {
+    if (cloudEnabled) return cloudCustomerRequest(route, init);
     if (!apiBase())
       throw new Error(
         "Start the admin server and configure the app connection before signing in.",
@@ -54,7 +57,7 @@ export function useCustomer() {
         if ((error as { status?: number }).status === 401) setData(null);
         else
           setError(
-            "Unable to sync. Check the connection to your admin server.",
+            (error as Error).message || "Unable to sync. Check your connection.",
           );
       }
     }
@@ -63,16 +66,24 @@ export function useCustomer() {
     alive.current = true;
     void (async () => {
       try {
-        if (Platform.OS !== "web")
+        if (!cloudEnabled && Platform.OS !== "web")
           token.current = await SecureStore.getItemAsync(KEY);
         await refresh();
       } finally {
         if (alive.current) setReady(true);
       }
     })();
+    const stopAppState = cloudEnabled ? watchSupabaseAppState() : () => {};
+    const authSubscription = cloudEnabled ? supabase?.auth.onAuthStateChange((_event, session) => {
+      generation.current++;
+      setData(null);
+      if (session) setTimeout(() => { if (alive.current) void refresh(); }, 0);
+    }).data.subscription : undefined;
     const timer = setInterval(refresh, 5000);
     return () => {
       alive.current = false;
+      stopAppState();
+      authSubscription?.unsubscribe();
       clearInterval(timer);
     };
   }, []);
@@ -81,18 +92,28 @@ export function useCustomer() {
     fields: Record<string, string>,
   ) {
     generation.current++;
+    if (cloudEnabled) {
+      const signedIn = await cloudAuthenticate(mode, fields);
+      if (!signedIn) return false;
+      const value = await cloudCustomerData();
+      generation.current++;
+      setData(value);
+      setError("");
+      return true;
+    }
     const result = await request("/" + mode, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fields),
     });
-    if (Platform.OS !== "web") {
+    if (!cloudEnabled && Platform.OS !== "web") {
       token.current = result.token;
       await SecureStore.setItemAsync(KEY, result.token);
     }
     generation.current++;
     setData(result);
     setError("");
+    return true;
   }
   async function action(route: string, body?: unknown, method = "POST") {
     generation.current++;
@@ -130,7 +151,7 @@ export function useCustomer() {
     await request("/logout", { method: "POST" });
     generation.current++;
     token.current = null;
-    if (Platform.OS !== "web") await SecureStore.deleteItemAsync(KEY);
+    if (!cloudEnabled && Platform.OS !== "web") await SecureStore.deleteItemAsync(KEY);
     setData(null);
     setError("");
   }

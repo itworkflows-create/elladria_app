@@ -1,4 +1,8 @@
-﻿import React, { useCallback, useEffect, useRef, useState } from "react";
+import { CategoryManager } from "./CategoryManager.web";
+import { adminRequest, jobImageUrl } from "./cloudApi";
+import { cloudEnabled } from "./supabase";
+import { StaffGate } from "./StaffGate.web";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useFonts } from "expo-font";
 import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
 import { Inter_600SemiBold } from "@expo-google-fonts/inter/600SemiBold";
@@ -103,6 +107,9 @@ const blankJob = (): Job => ({
   updatedAt: "",
 });
 export default function AdminPanel() {
+  return cloudEnabled ? <StaffGate><AdminWorkspace /></StaffGate> : <AdminWorkspace />;
+}
+function AdminWorkspace() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [page, setPage] = useState<
     | "overview"
@@ -138,16 +145,7 @@ export default function AdminPanel() {
     Inter_700Bold,
   });
   const pending = useRef(false);
-  const request = async (route: string, init?: RequestInit) => {
-    const response = await fetch(route, {
-      credentials: "same-origin",
-      signal: AbortSignal.timeout(12000),
-      ...init,
-    });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Request failed.");
-    return result;
-  };
+  const request = adminRequest;
   const reload = useCallback(async () => {
     setError("");
     try {
@@ -155,6 +153,7 @@ export default function AdminPanel() {
       setToken(session.token);
       const value = await request("/api/admin/catalog");
       setCatalog(value);
+      setContentRevision(value.revision);
     } catch (error) {
       setError((error as Error).message);
     }
@@ -301,7 +300,7 @@ export default function AdminPanel() {
       name: "search_admin_jobs",
       title: "Search managed jobs",
       description:
-        "Read jobs in this local admin catalog. Does not change publication or app content.",
+        "Read jobs in this admin catalog. Does not change publication or app content.",
       inputSchema: {
         type: "object",
         properties: { query: { type: "string" } },
@@ -355,9 +354,7 @@ export default function AdminPanel() {
   }
   const published =
     catalog?.jobs.filter((job) => job.status === "published") || [];
-  const categories = [
-    ...new Set(catalog?.jobs.map((job) => job.category) || []),
-  ];
+  const categories = catalog?.categories ?? [...new Set(catalog?.jobs.map((job) => job.category) || [])];
   const visible =
     catalog?.jobs.filter(
       (job) =>
@@ -369,7 +366,7 @@ export default function AdminPanel() {
     ) || [];
   const newJob = () => {
     setPage("jobs");
-    setEditor({ create: true, job: blankJob() });
+    setEditor({ create: true, job: {...blankJob(), category: categories[0] || ""} });
   };
   const table = (items: Job[]) => (
     <div className="table-wrap">
@@ -501,10 +498,7 @@ export default function AdminPanel() {
               { key: "jobs", name: "Jobs & vacancies", icon: "jobs" },
               {
                 key: "content",
-                name:
-                  page === "content"
-                    ? "App content"
-                    : page[0].toUpperCase() + page.slice(1),
+                name: "App content",
                 icon: "edit",
               },
               { key: "customers", name: "Customers", icon: "globe" },
@@ -530,7 +524,7 @@ export default function AdminPanel() {
         <div className="sidebar-bottom">
           <div className="local-label">
             <i />
-            Local demo workspace
+            {cloudEnabled ? "Cloud workspace" : "Local demo workspace"}
           </div>
           <p>Published jobs and content sync with your connected app.</p>
           <a
@@ -566,7 +560,7 @@ export default function AdminPanel() {
             </span>
             <span className="admin-avatar">AD</span>
             <div className="admin-user">
-              Administrator<small>Local computer access</small>
+              Staff<small>{cloudEnabled ? "Secure staff access" : "Local computer access"}</small>
             </div>
           </div>
         </header>
@@ -581,10 +575,10 @@ export default function AdminPanel() {
           {!catalog && (
             <section className="panel empty-admin">
               <h2>
-                {error ? "Admin server unavailable" : "Loading your workspace…"}
+                {error ? "Workspace unavailable" : "Loading your workspace…"}
               </h2>
               <p>
-                Use the admin launch script to start the shared local server.
+                {cloudEnabled ? "Check your connection and confirm both Supabase setup scripts have been applied." : "Use the admin launch script to start the shared local server."}
               </p>
             </section>
           )}
@@ -761,6 +755,7 @@ export default function AdminPanel() {
                   onNavigate={setPage}
                 />
               )}
+              {page === "jobs" && cloudEnabled && <CategoryManager catalog={catalog} onSaved={(value)=>{setCatalog(value);setCategory("all");setNotice("Categories updated.");}} />}
               {page === "jobs" && (
                 <section className="panel">
                   <div className="job-toolbar">
@@ -878,6 +873,7 @@ export default function AdminPanel() {
                     <section className="panel form-panel">
                       <div className="section-number">02</div>
                       <h2>Announcement</h2>
+                      <p role="status"><strong>{contentDirty ? "Unsaved changes: click Publish app content to update what customers see." : content.announcementEnabled ? "Published: visible on the Home screen and in notifications." : "Hidden: switch on Show announcement in the app to display it."}</strong></p>
                       <p>
                         A notice displayed below the home banner. This does not
                         send a push notification.
@@ -1039,7 +1035,7 @@ export default function AdminPanel() {
                 </form>
               )}
               <footer className="workspace-footer">
-                Elladria admin · Local demo
+                Elladria admin � {cloudEnabled ? "Cloud" : "Local demo"}
                 <span>
                   Last saved {new Date(catalog.updatedAt).toLocaleString()}
                 </span>
@@ -1063,6 +1059,7 @@ export default function AdminPanel() {
       {editor && (
         <JobEditor
           key={editor.job.id}
+          categories={categories}
           initial={editor.job}
           create={editor.create}
           revision={catalog!.revision}
@@ -1113,6 +1110,7 @@ export default function AdminPanel() {
   );
 }
 function JobEditor({
+  categories,
   token,
   initial,
   create,
@@ -1121,6 +1119,7 @@ function JobEditor({
   onSave,
   onClose,
 }: {
+  categories: string[];
   token: string;
   initial: Job;
   create: boolean;
@@ -1144,7 +1143,7 @@ function JobEditor({
     }
     setUploading(true);
     try {
-      const response = await fetch("/api/admin/uploads", {
+      const result = await adminRequest("/api/admin/uploads", {
         method: "POST",
         credentials: "same-origin",
         headers: {
@@ -1154,8 +1153,6 @@ function JobEditor({
         },
         body: file,
       });
-      const result = await response.json();
-      if (!response.ok) throw Error(result.error);
       setJob((previous) => ({ ...previous, imageId: result.id }));
     } catch (error) {
       setError((error as Error).message);
@@ -1243,7 +1240,7 @@ function JobEditor({
             <div className="job-image-editor">
               {job.imageId && (
                 <img
-                  src={"/api/admin/files/" + job.imageId}
+                  src={jobImageUrl(job.imageId, true)}
                   alt="Job image preview"
                 />
               )}
@@ -1263,7 +1260,7 @@ function JobEditor({
               <span className="upload-hint">
                 {uploading
                   ? "Uploading image…"
-                  : "PNG or JPEG, up to 5 MB. Visible to customers after the job is published."}
+                  : "PNG or JPEG, up to 5 MB. Upload only images intended for public use."}
               </span>
               {job.imageId && (
                 <button
@@ -1283,9 +1280,13 @@ function JobEditor({
             <div className="form-grid">
               {input("City", "city", 100)}
               {input("Country", "country", 100)}
-              {input("Category", "category", 80)}
+              <label>Category<select required value={job.category} onChange={event=>update("category",event.target.value)}>
+                <option value="" disabled>Choose an admin-defined category</option>
+                {[...new Set([...categories,...(job.category?[job.category]:[])])].map(name=><option key={name} value={name}>{name}</option>)}
+              </select></label>
+              <p className="helper-text">Manage these choices under Jobs & vacancies → Job categories. Customers use them to filter available jobs.</p>
               <label>
-                Card icon
+                Card icon (visual symbol)
                 <select
                   value={job.icon}
                   onChange={(event) => update("icon", event.target.value)}

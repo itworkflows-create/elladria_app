@@ -1,4 +1,5 @@
-﻿import React, { useEffect, useState } from "react";
+import { adminRequest, downloadDocument } from "./cloudApi";
+import React, { useEffect, useState } from "react";
 import type { AdminActivity, CustomerProfile } from "./customerTypes";
 export type ActivityPage =
   "overview" | "customers" | "appointments" | "applications" | "documents";
@@ -19,12 +20,10 @@ export function AdminActivityPanel({
     [busy, setBusy] = useState(false);
   async function refresh() {
     try {
-      const response = await fetch("/api/admin/activity", {
+      const result = await adminRequest("/api/admin/activity", {
         credentials: "same-origin",
         signal: AbortSignal.timeout(10000),
       });
-      const result = await response.json();
-      if (!response.ok) throw Error(result.error);
       setActivity(result);
       setError("");
     } catch (error) {
@@ -61,14 +60,12 @@ export function AdminActivityPanel({
       return;
     setBusy(true);
     try {
-      const response = await fetch(`/api/admin/${kind}/${id}`, {
+      await adminRequest(`/api/admin/${kind}/${id}`, {
         method: "PATCH",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json", "X-CSRF-Token": token },
         body: JSON.stringify({ previousStatus, status: next }),
       });
-      const result = await response.json();
-      if (!response.ok) throw Error(result.error);
       await refresh();
     } catch (error) {
       setError((error as Error).message);
@@ -422,12 +419,9 @@ export function AdminActivityPanel({
                   <td>{file.kind}</td>
                   <td>{new Date(file.createdAt).toLocaleDateString()}</td>
                   <td>
-                    <a
-                      className="btn secondary"
-                      href={"/api/admin/files/" + file.id}
-                    >
+                    <button className="btn secondary" onClick={() => void downloadDocument(file.id).catch(error => setError(error.message))}>
                       Download
-                    </a>
+                    </button>
                   </td>
                 </tr>
               ))}

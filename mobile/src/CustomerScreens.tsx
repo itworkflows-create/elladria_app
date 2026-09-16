@@ -1,3 +1,4 @@
+import { cloudEnabled } from "./supabase";
 ﻿import React, { useState } from "react";
 import { Platform, Pressable, Text, View } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
@@ -31,9 +32,10 @@ export function CustomerAuth({
     }
     setBusy(true);
     try {
-      await customer.authenticate(mode, { name, phone, email, password });
+      const signedIn = await customer.authenticate(mode, { name, phone, email, password });
       setPassword("");
-      onSuccess();
+      if (signedIn) onSuccess();
+      else { setMode("login"); setError("Check your email to confirm your account, then sign in here."); }
     } catch (error) {
       setError((error as Error).message);
     } finally {
@@ -51,8 +53,7 @@ export function CustomerAuth({
         </Text>
       </View>
       <Text style={s.small}>
-        Connected local demo. Use fictional personal details and sample
-        documents.
+        {cloudEnabled ? "Your account connects securely to Elladria." : "Connected local demo. Use fictional personal details and sample documents."}
       </Text>
       <Card>
         {mode === "register" && (
@@ -203,8 +204,9 @@ export function CustomerProfileView({
       <Card>
         <Text style={s.h2}>My documents</Text>
         <Text style={s.body}>
-          Share a CV or supporting document with your recruitment team. PDF, PNG
-          or JPEG, up to 5 MB each.
+          Upload a CV, supporting document, or photo for the recruitment team.
+          PDF, JPG or PNG only. Maximum 5 MB per file; larger files are rejected.
+          For a photo, select Document below.
         </Text>
         <View style={s.chipsWrap}>
           {(["CV", "Document"] as const).map((value) => (

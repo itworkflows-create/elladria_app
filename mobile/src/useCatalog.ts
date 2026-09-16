@@ -4,10 +4,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jobs } from "./domain";
 import { defaultContent, type Catalog } from "./catalog";
 import { loadCatalog } from "./api";
-const KEY = "elladria.public-catalog.v1";
+import { cloudEnabled } from "./supabase";
+const KEY = cloudEnabled ? "elladria.cloud-catalog.v1" : "elladria.public-catalog.v1";
 export function useCatalog() {
   const [catalog, setCatalog] = useState<Catalog>({
-    jobs,
+    jobs: cloudEnabled ? [] : jobs,
     content: defaultContent,
     revision: 0,
     updatedAt: "",

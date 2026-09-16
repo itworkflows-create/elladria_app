@@ -1,3 +1,6 @@
+import { buildNotifications } from "./src/notifications";
+import { useNotificationReads } from "./src/useNotificationReads";
+import { jobImageUrl } from "./src/cloudApi";
 ﻿import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -51,6 +54,7 @@ type Screen =
   | "booking"
   | "profile"
   | "saved"
+  | "notifications"
   | "reminders"
   | "countries"
   | "staff";
@@ -75,6 +79,8 @@ function MobileApp() {
   const [applying, setApplying] = useState(false);
   const { catalog, connection } = useCatalog();
   const jobs = catalog.jobs;
+  const notifications=buildNotifications(catalog.content,customer.data?.applications ?? []);
+  const notificationReads=useNotificationReads(customer.data?.profile.id ?? "guest",notifications);
   const featuredJob = jobs.find((item) => item.featured) ?? jobs[0];
   const [state, setState] = useState<DemoState>(initialState);
   const [ready, setReady] = useState(false);
@@ -183,7 +189,7 @@ function MobileApp() {
     <Card key={item.id}>
       {item.imageId && (
         <Image
-          source={{ uri: apiBase() + "/api/images/" + item.imageId }}
+          source={{ uri: jobImageUrl(item.imageId) }}
           style={{ width: "100%", height: 170, borderRadius: 10 }}
           accessibilityLabel={item.title}
           resizeMode="cover"
@@ -242,6 +248,7 @@ function MobileApp() {
     profile: "Profile",
     saved: "Saved Jobs",
     reminders: "My Reminders",
+    notifications: "Notifications",
     countries: "Browse Countries",
     staff: "Staff Preview",
   };
@@ -277,12 +284,14 @@ function MobileApp() {
           </Text>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={t("My Reminders")}
-            onPress={() => nav("reminders")}
+            accessibilityLabel={`Notifications, ${notificationReads.unread.length} unread`}
+            onPress={() => nav("notifications")}
             style={s.iconButton}
           >
             <Icon name="notifications-outline" />
-            {state.reminders.length > 0 && <View style={s.dot} />}
+            {notificationReads.unread.length > 0 && <View style={{position:'absolute',right:0,top:0,minWidth:19,height:19,paddingHorizontal:4,borderRadius:10,backgroundColor:C.red,alignItems:'center',justifyContent:'center'}}>
+              <Text style={{color:C.white,fontSize:11,fontWeight:'700'}}>{notificationReads.unread.length>99?'99+':notificationReads.unread.length}</Text>
+            </View>}
           </Pressable>
         </View>
       )}
@@ -512,7 +521,7 @@ function MobileApp() {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={s.chips}
               >
-                {["All", ...new Set(jobs.map((item) => item.category))].map(
+                {["All", ...(catalog.categories ?? [...new Set(jobs.map((item) => item.category))])].map(
                   (item) => (
                     <Pressable
                       accessibilityRole="button"
@@ -576,7 +585,7 @@ function MobileApp() {
               <View style={s.detailHero}>
                 {job.imageId && (
                   <Image
-                    source={{ uri: apiBase() + "/api/images/" + job.imageId }}
+                    source={{ uri: jobImageUrl(job.imageId) }}
                     style={{ width: "100%", height: 180, borderRadius: 8 }}
                     accessibilityLabel={job.title}
                     resizeMode="cover"
@@ -666,7 +675,7 @@ function MobileApp() {
                 }}
               />
               <Text style={s.small}>
-                Vacancy information is managed in the local admin catalog. This
+                Vacancy information is managed by the Elladria team. This
                 is a demo, not a live recruitment offer.
               </Text>
             </>
@@ -770,6 +779,20 @@ function MobileApp() {
               )}
             </>
           )}
+          {screen === "notifications" && <>
+            <Text style={s.body}>Announcements and your latest application updates. Read status is saved on this device.</Text>
+            {!!notificationReads.error && <Text style={s.error}>{notificationReads.error}</Text>}
+            {notificationReads.unread.length>0 && <Button secondary title="Mark all as read" onPress={()=>notificationReads.markRead(notifications.map(n=>n.id))} />}
+            {!notifications.length && <Empty icon="notifications-outline" title="No notifications yet" detail="Published announcements and application updates will appear here." />}
+            {notifications.map(item=><Card key={item.id}>
+              <Text style={s.h2}>{item.title}</Text>
+              {notificationReads.unread.some(n=>n.id===item.id) && <Text style={[s.badge,{color:C.red}]}>UNREAD</Text>}
+              <Text style={s.body}>{item.body}</Text>
+              <Button secondary disabled={!notificationReads.ready} title={item.destination==='home'?'View announcement':'View application'} onPress={()=>{
+                notificationReads.markRead([item.id]);tab(item.destination);
+              }} />
+            </Card>)}
+          </>}
           {screen === "reminders" && (
             <>
               <Text style={s.body}>

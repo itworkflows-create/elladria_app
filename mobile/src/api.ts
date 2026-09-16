@@ -1,4 +1,6 @@
-﻿import { Platform } from "react-native";
+﻿import { cloudEnabled } from "./supabase";
+import { cloudCatalog } from "./cloudApi";
+import { Platform } from "react-native";
 import type { Catalog } from "./catalog";
 export function apiBase() {
   const configured = process.env.EXPO_PUBLIC_API_URL;
@@ -8,6 +10,7 @@ export function apiBase() {
   return "";
 }
 export async function loadCatalog(signal?: AbortSignal): Promise<Catalog> {
+  if (cloudEnabled) return cloudCatalog(false, signal);
   const base = apiBase();
   if (!base) throw new Error("No catalog server configured.");
   const response = await fetch(`${base}/api/catalog`, { signal });
