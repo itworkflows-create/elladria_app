@@ -4,10 +4,26 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "environment": "preview",
+      "env": {
+        "EXPO_PUBLIC_BACKEND": "supabase",
+        "ELLADRIA_RELEASE": "1"
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "environment": "production",
+      "env": {
+        "EXPO_PUBLIC_BACKEND": "supabase",
+        "ELLADRIA_RELEASE": "1"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      }
     }
+  },
+  "cli": {
+    "appVersionSource": "remote"
   }
 }

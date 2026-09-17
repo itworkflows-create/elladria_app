@@ -13,7 +13,7 @@ const storage = Platform.OS === 'web' ? AsyncStorage : {
 function client(storageKey: string) {
   return url && key ? createClient(url, key, {
     auth: { storage, storageKey, autoRefreshToken: true, persistSession: true,
-      detectSessionInUrl: false, lock: processLock },
+      detectSessionInUrl: false, flowType: storageKey === 'elladria.candidate.auth' ? 'pkce' : 'implicit', lock: processLock },
     global: { fetch: (input, init) => fetch(input, { ...init,
       signal: init?.signal ?? AbortSignal.timeout(20000) }) },
   }) : null;

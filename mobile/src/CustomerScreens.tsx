@@ -1,3 +1,4 @@
+import { requestPasswordReset } from "./PasswordRecovery";
 import { cloudEnabled } from "./supabase";
 ﻿import React, { useState } from "react";
 import { Platform, Pressable, Text, View } from "react-native";
@@ -19,10 +20,17 @@ export function CustomerAuth({
     [phone, setPhone] = useState(""),
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
+    [message, setMessage] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   async function submit() {
+    if (busy) return;
     setError("");
+    setMessage("");
+    if (!email.trim() || !password) {
+      setError("Enter your email address and password.");
+      return;
+    }
     if (mode === "register") {
       const issues = validateProfile({ name, phone, email }, password);
       if (Object.keys(issues).length) {
@@ -106,6 +114,14 @@ export function CustomerAuth({
           disabled={busy}
           onPress={() => void submit()}
         />
+        {!!message && <Text accessibilityRole="alert" style={s.body}>{message}</Text>}
+        {cloudEnabled && mode === "login" && <Button secondary title="Forgot password?" disabled={busy} onPress={() => {
+          setBusy(true); setError(""); setMessage("");
+          void requestPasswordReset(email)
+            .then(() => setMessage("If this email has an account, a recovery link has been sent. Open it on this device."))
+            .catch(error => setError(error.message))
+            .finally(() => setBusy(false));
+        }} />}
         <Button
           secondary
           title={
@@ -116,6 +132,7 @@ export function CustomerAuth({
           disabled={busy}
           onPress={() => {
             setMode(mode === "register" ? "login" : "register");
+            setMessage("");
             setError("");
           }}
         />
@@ -166,6 +183,7 @@ export function CustomerProfileView({
       setBusy(false);
     }
   }
+  if (!customer.ready) return <Text style={s.body}>Restoring your account...</Text>;
   if (!data)
     return (
       <>
@@ -174,6 +192,7 @@ export function CustomerProfileView({
           title="Your Elladria account"
           detail="Sign in to submit applications, book appointments, and upload documents."
         />
+        {!!customer.error && <Text accessibilityRole="alert" style={s.error}>{customer.error}</Text>}
         <Button title="Sign in / Create account" onPress={onSignIn} />
       </>
     );
@@ -314,6 +333,7 @@ export function CustomerAppointments({
   const [cancel, setCancel] = useState<string | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  if (!customer.ready) return <Text style={s.body}>Restoring your account...</Text>;
   if (!customer.data)
     return (
       <>
@@ -322,6 +342,7 @@ export function CustomerAppointments({
           title="Your appointments"
           detail="Sign in to book an appointment and share it with the Elladria team."
         />
+        {!!customer.error && <Text accessibilityRole="alert" style={s.error}>{customer.error}</Text>}
         <Button title="Sign in / Create account" onPress={onSignIn} />
       </>
     );

@@ -1,7 +1,7 @@
 import { cloudEnabled, supabase, watchSupabaseAppState } from "./supabase";
 import { cloudCustomerRequest, cloudAuthenticate, cloudCustomerData } from "./cloudApi";
 ﻿import { useEffect, useRef, useState } from "react";
-import { Platform } from "react-native";
+import { AppState, Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { apiBase } from "./api";
 import type { CustomerData } from "./customerTypes";
@@ -12,7 +12,10 @@ export function useCustomer() {
     [ready, setReady] = useState(false);
   const token = useRef<string | null>(null),
     alive = useRef(true),
-    generation = useRef(0);
+    generation = useRef(0),
+    accountId = useRef<string | null>(null),
+    refreshing = useRef(false),
+    mutations = useRef(0);
   async function request(route: string, init: RequestInit = {}) {
     if (cloudEnabled) return cloudCustomerRequest(route, init);
     if (!apiBase())
@@ -44,11 +47,12 @@ export function useCustomer() {
     }
   }
   async function refresh() {
+    if (refreshing.current || mutations.current > 0) return;
+    refreshing.current = true;
     const version = generation.current;
     try {
       const result = await request("/me");
       if (alive.current && version === generation.current) {
-        generation.current++;
         setData(result);
         setError("");
       }
@@ -60,6 +64,11 @@ export function useCustomer() {
             (error as Error).message || "Unable to sync. Check your connection.",
           );
       }
+    } finally {
+      refreshing.current = false;
+      if (alive.current && version === generation.current) setReady(true);
+      else if (alive.current && mutations.current === 0)
+        setTimeout(() => { if (alive.current) void refresh(); }, 0);
     }
   }
   useEffect(() => {
@@ -69,21 +78,36 @@ export function useCustomer() {
         if (!cloudEnabled && Platform.OS !== "web")
           token.current = await SecureStore.getItemAsync(KEY);
         await refresh();
-      } finally {
-        if (alive.current) setReady(true);
+      } catch (error) {
+        if (alive.current) {
+          setError((error as Error).message || "Unable to restore your session.");
+          setReady(true);
+        }
       }
     })();
     const stopAppState = cloudEnabled ? watchSupabaseAppState() : () => {};
     const authSubscription = cloudEnabled ? supabase?.auth.onAuthStateChange((_event, session) => {
-      generation.current++;
-      setData(null);
+      if (!alive.current) return;
+      const nextId = session?.user.id ?? null;
+      if (accountId.current !== nextId) {
+        accountId.current = nextId;
+        generation.current++;
+        setData(null);
+        setError("");
+      }
       if (session) setTimeout(() => { if (alive.current) void refresh(); }, 0);
     }).data.subscription : undefined;
-    const timer = setInterval(refresh, 5000);
+    const timer = setInterval(() => {
+      if (Platform.OS === "web" || AppState.currentState === "active") void refresh();
+    }, 5000);
+    const foreground = AppState.addEventListener("change", state => {
+      if (state === "active") void refresh();
+    });
     return () => {
       alive.current = false;
       stopAppState();
       authSubscription?.unsubscribe();
+      foreground.remove();
       clearInterval(timer);
     };
   }, []);
@@ -116,16 +140,22 @@ export function useCustomer() {
     return true;
   }
   async function action(route: string, body?: unknown, method = "POST") {
-    generation.current++;
+    const version = ++generation.current;
+    mutations.current++;
+    try {
     const result = await request(route, {
       method,
       headers: { "Content-Type": "application/json" },
       body: body === undefined ? undefined : JSON.stringify(body),
     });
-    generation.current++;
-    setData(result);
-    setError("");
+    if (alive.current && version === generation.current) {
+      setData(result);
+      setError("");
+    }
     return result as CustomerData;
+    } finally {
+      mutations.current--;
+    }
   }
   async function upload(
     name: string,
@@ -133,7 +163,9 @@ export function useCustomer() {
     body: ArrayBuffer,
     kind: string,
   ) {
-    generation.current++;
+    const version = ++generation.current;
+    mutations.current++;
+    try {
     const result = await request("/files", {
       method: "POST",
       headers: {
@@ -143,9 +175,13 @@ export function useCustomer() {
       },
       body,
     });
-    generation.current++;
-    setData(result);
-    setError("");
+    if (alive.current && version === generation.current) {
+      setData(result);
+      setError("");
+    }
+    } finally {
+      mutations.current--;
+    }
   }
   async function logout() {
     await request("/logout", { method: "POST" });

@@ -3,6 +3,7 @@ import { supabase, adminSupabase, cloudEnabled } from './supabase';
 import { validateContent, validateJob, type Catalog } from './catalog';
 import type { CustomerData, AdminActivity, Upload } from './customerTypes';
 import { Platform } from 'react-native';
+import { customerAuthError } from './sessionPolicy';
 
 type Row = Record<string, any>;
 function client(admin = false): SupabaseClient {
@@ -55,7 +56,8 @@ async function records(admin = false) {
 export async function cloudCustomerData(): Promise<CustomerData> {
   const c = client();
   const { data, error } = await c.auth.getUser();
-  if (error || !data.user) throw Object.assign(Error('Sign in to continue.'), {status:401});
+  const authError = customerAuthError(error, !!data.user);
+  if (authError) throw authError;
   const all = await records();
   const ownProfile = all.customers.find(p => p.id === data.user!.id);
   if (!ownProfile) throw Error('Your profile is not ready. Apply the app operations migration.');

@@ -1,3 +1,4 @@
+import { PasswordRecoveryGate } from "./src/PasswordRecovery";
 import { buildNotifications } from "./src/notifications";
 import { useNotificationReads } from "./src/useNotificationReads";
 import { jobImageUrl } from "./src/cloudApi";
@@ -41,7 +42,7 @@ import {
   CustomerProfileView,
   CustomerAppointments,
 } from "./src/CustomerScreens";
-import { apiBase } from "./src/api";
+import { cloudEnabled } from "./src/supabase";
 import { useCatalog } from "./src/useCatalog";
 import AdminPanel from "./src/AdminPanel";
 type Screen =
@@ -70,7 +71,7 @@ export default function App() {
     return <AdminPanel />;
   return (
     <SafeAreaProvider>
-      <MobileApp />
+      <PasswordRecoveryGate><MobileApp /></PasswordRecoveryGate>
     </SafeAreaProvider>
   );
 }
@@ -124,7 +125,7 @@ function MobileApp() {
       .catch(() => {
         if (active)
           setStorageError(
-            "Saved demo data could not be loaded. Changes may not survive a restart.",
+            "Saved preferences could not be loaded. Changes may not survive a restart.",
           );
       })
       .finally(() => {
@@ -138,7 +139,7 @@ function MobileApp() {
     if (!ready) return;
     writeQueue.current = writeQueue.current
       .then(() => AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state)))
-      .catch(() => setStorageError("Could not save demo data on this device."));
+      .catch(() => setStorageError("Could not save preferences on this device."));
   }, [state, ready]);
   useEffect(() => {
     const sub = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -162,6 +163,7 @@ function MobileApp() {
   const toggle = (key: "saved" | "reminders", id: string) =>
     setState((prev) => ({ ...prev, [key]: toggleItem(prev[key], id) }));
   const requireProfile = (next: Route) => {
+    if (!customer.ready) { notify("Restoring your account. Please try again in a moment."); return; }
     if (customer.data) nav(next.screen, next.jobId);
     else {
       setPending(next);
@@ -170,6 +172,7 @@ function MobileApp() {
   };
   const apply = async () => {
     if (!job || applying) return;
+    if (!customer.ready) { notify("Restoring your account. Please try again in a moment."); return; }
     if (!customer.data) {
       setPending({ screen: "details", jobId: job.id });
       nav("register");
@@ -229,7 +232,7 @@ function MobileApp() {
           {item.salary}
           <Text style={s.small}> / month</Text>
         </Text>
-        <Text style={s.badge}>DEMO</Text>
+        <Text style={s.badge}>{cloudEnabled ? "VACANCY" : "DEMO"}</Text>
       </View>
       <Button
         title={t("View Details")}
@@ -298,7 +301,7 @@ function MobileApp() {
       {screen !== "language" && (
         <View style={s.demoBar}>
           <Text style={s.demoText}>
-            {t("Demo mode")} ·{" "}
+            {!cloudEnabled && <>{t("Demo mode")} | </>}
             {connection === "connected"
               ? "Catalog connected"
               : connection === "loading"
@@ -380,9 +383,9 @@ function MobileApp() {
                 </Pressable>
               ))}
               <Text style={[s.small, { textAlign: "center", marginTop: 20 }]}>
-                Demo preview · Use sample information only.{"\n"}Sinhala and
-                Tamil interface translations are drafts.{"\n"}Sample job content
-                is in English.
+                {!cloudEnabled && <>Demo preview - Use sample information only.{"\n"}</>}
+                Sinhala and Tamil interface translations are drafts.{"\n"}
+                Job content is shown in the language provided by the recruitment team.
               </Text>
             </>
           )}
@@ -552,7 +555,7 @@ function MobileApp() {
                     jobs,
                   ).length
                 }{" "}
-                demo opportunities
+                {cloudEnabled ? "opportunities" : "demo opportunities"}
               </Text>
               {filterJobs(
                 query,
@@ -592,14 +595,14 @@ function MobileApp() {
                   />
                 )}
                 <View style={s.between}>
-                  <Text style={s.badge}>SAMPLE VACANCY</Text>
+                  <Text style={s.badge}>{cloudEnabled ? "VACANCY" : "SAMPLE VACANCY"}</Text>
                   <Pressable
                     accessibilityRole="button"
                     accessibilityLabel="Share job"
                     style={s.iconButton}
                     onPress={() =>
                       Share.share({
-                        message: `Elladria demo vacancy: ${job.title} at ${job.company}, ${job.city}, {job.country}. ${job.salary}/month. Sample listing, not a live offer.`,
+                        message: `Elladria vacancy: ${job.title} at ${job.company}, ${job.city}, ${job.country}. ${job.salary}/month.${cloudEnabled ? "" : " Sample listing, not a live offer."}`,
                       }).catch(() =>
                         notify("Unable to open sharing. Please try again."),
                       )
@@ -670,13 +673,13 @@ function MobileApp() {
                 onPress={() => {
                   toggle("reminders", job.id);
                   notify(
-                    "Demo reminders appear in My Reminders. No push notification is scheduled.",
+                    "Saved to My Reminders. No push notification is scheduled.",
                   );
                 }}
               />
               <Text style={s.small}>
-                Vacancy information is managed by the Elladria team. This
-                is a demo, not a live recruitment offer.
+                Vacancy information is managed by the Elladria team.
+                {!cloudEnabled && " This is a demo, not a live recruitment offer."}
               </Text>
             </>
           )}
@@ -796,8 +799,7 @@ function MobileApp() {
           {screen === "reminders" && (
             <>
               <Text style={s.body}>
-                Your in-app reminder list. Push notifications are not enabled in
-                this demo.
+                Your in-app reminder list. Push notifications are not enabled.
               </Text>
               {state.reminders.length === 0 && (
                 <Empty
@@ -848,7 +850,7 @@ function MobileApp() {
                   </Text>
                   <Text style={s.badge}>
                     {jobs.filter((item) => item.country === country).length}{" "}
-                    DEMO VACANCIES
+                    {cloudEnabled ? "VACANCIES" : "DEMO VACANCIES"}
                   </Text>
                   <Button
                     title={t("New Vacancies")}

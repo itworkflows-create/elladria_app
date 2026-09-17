@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/icon.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.elladria.demo"
+      "package": "com.elladria.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -24,6 +24,7 @@
     "plugins": [
       "expo-font",
       "expo-secure-store"
-    ]
+    ],
+    "scheme": "elladria"
   }
 }
