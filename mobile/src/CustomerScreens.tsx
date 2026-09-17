@@ -150,7 +150,9 @@ export function CustomerProfileView({
   const [kind, setKind] = useState<"CV" | "Document">("CV"),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [remove, setRemove] = useState<string | null>(null);
+    [remove, setRemove] = useState<string | null>(null),
+    [deleting, setDeleting] = useState(false),
+    [deletePassword, setDeletePassword] = useState("");
   const data = customer.data;
   async function upload() {
     setError("");
@@ -304,6 +306,20 @@ export function CustomerProfileView({
           </View>
         ))}
       </Card>
+      {cloudEnabled && <Card>
+        <Text style={s.h2}>Delete account</Text>
+        {deleting ? <>
+          <Text style={s.body}>This permanently removes your account, applications, appointments, and uploaded documents. This cannot be undone.</Text>
+          <Field label="Current password" value={deletePassword} onChangeText={setDeletePassword} secureTextEntry autoCapitalize="none" autoCorrect={false} maxLength={128} />
+          <Button title={busy ? "Deleting..." : "Permanently delete my account"} disabled={busy || !deletePassword} onPress={() => {
+            setBusy(true); setError("");
+            void customer.deleteAccount(deletePassword)
+              .catch(error => setError(error.message))
+              .finally(() => {setDeletePassword(""); setBusy(false);});
+          }} />
+          <Button secondary title="Keep my account" disabled={busy} onPress={() => {setDeleting(false);setDeletePassword("");setError("");}} />
+        </> : <Button secondary title="Delete my account" disabled={busy} onPress={() => setDeleting(true)} />}
+      </Card>}
       <Button
         title="Sign out"
         secondary

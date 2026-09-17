@@ -191,6 +191,26 @@ export function useCustomer() {
     setData(null);
     setError("");
   }
-  return { data, error, ready, refresh, authenticate, action, upload, logout };
+  async function deleteAccount(password: string) {
+    if (!cloudEnabled || !supabase) throw new Error("Account deletion is unavailable in local demo mode.");
+    generation.current++;
+    mutations.current++;
+    try {
+      const result = await supabase.functions.invoke('delete-account', {body:{password,confirmation:'DELETE'}});
+      if (result.error) {
+        let message = 'Account deletion is unavailable. Please try again or contact support.';
+        if (result.error.context instanceof Response) {
+          const response = await result.error.context.json().catch(() => null);
+          if (typeof response?.error === 'string') message = response.error;
+        }
+        throw new Error(message);
+      }
+      if (!result.data?.ok) throw new Error('Account deletion was not confirmed. Please contact support.');
+      generation.current++;
+      setData(null); setError('');
+      await supabase.auth.signOut({scope:'local'});
+    } finally {mutations.current--;}
+  }
+  return { data, error, ready, refresh, authenticate, action, upload, logout, deleteAccount };
 }
 export type CustomerClient = ReturnType<typeof useCustomer>;

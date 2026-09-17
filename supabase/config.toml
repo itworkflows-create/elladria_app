@@ -1,0 +1,4 @@
+# This function verifies the bearer JWT with Auth.getUser before any deletion.
+# Keep this explicit verification when using publishable keys/new JWT signing keys.
+[functions.delete-account]
+verify_jwt = false

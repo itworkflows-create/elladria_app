@@ -18,3 +18,8 @@ The source screenshots in this folder are browser renders of the shared native U
 Added the connected local job/content management panel. TypeScript and nine candidate/admin tests pass, including publication filtering, featured-job uniqueness, editing, archiving, deletion, stale-write rejection, server restart persistence, session/origin/CSRF checks, and managed-ID restoration. Web, iOS and Android exports succeed.
 
 The admin panel was opened through its local URL after a successful HTTP response. No admin browser interaction or physical-device validation is claimed. WebMCP is feature-detected but its browser contract is unverified. Candidate personal data and bookings remain local to each device; only job/catalog content is managed centrally.
+
+
+## Android release preparation - 2026-09-17
+
+See [Android release record](ANDROID-RELEASE.md) for current changes, verification and remaining release blockers. Earlier demo-only notes above are historical. No signed Android package or store upload is claimed.

@@ -105,3 +105,8 @@ a notification or Mark all as read clears its unread flag. Changes to announceme
 text or application status create a new notification identity. Read flags are stored
 per account on the current device; they are not synchronized across devices. Reminders
 remain available separately. These are in-app notices, not OS push notifications.
+
+
+## Account management release work (2026-09-17)
+
+Password recovery and account-deletion UI are now implemented. The delete-account Edge Function is prepared locally with password verification, staff protection, paginated private-document cleanup and Auth deletion. It has NOT been deployed. See [Android release setup](../mobile/docs/ANDROID-RELEASE.md) for deployment, recovery redirect configuration and current verification. Real email delivery, hosted deletion and device acceptance are still required.
