@@ -25,6 +25,12 @@
       "expo-font",
       "expo-secure-store"
     ],
-    "scheme": "elladria"
+    "scheme": "elladria",
+    "extra": {
+      "eas": {
+        "projectId": "07369ef0-e90a-4656-8388-a5b9fbfd1557"
+      }
+    },
+    "owner": "it-elladria"
   }
 }

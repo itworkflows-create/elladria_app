@@ -62,3 +62,22 @@ The function uses server-provided SUPABASE_URL, SUPABASE_ANON_KEY and SUPABASE_S
 Auth deletion relies on existing cascading foreign keys to remove the profile, applications and appointments. Storage is cleaned first, in pages. If cleanup fails, the account is retained and the user sees a retry message explaining that some documents may already have been removed. Staff accounts cannot self-delete through this endpoint.
 
 Password recovery uses a same-device PKCE verifier. In Supabase Authentication > URL Configuration, add elladria://reset-password and the exact production web URL with /?recovery=1; add the equivalent localhost URL only for local browser testing. Confirm the recovery email template uses the configured redirect.
+
+## Preview APK build - 2026-09-18
+
+- Expo login verified for `it-elladria`.
+- Linked `@it-elladria/elladria-mobile`, project ID `07369ef0-e90a-4656-8388-a5b9fbfd1557`.
+- Configured the public Supabase URL and publishable key in the EAS preview environment. Production environment setup is still pending.
+- Generated Android signing credentials on EAS.
+- Added `.easignore` to exclude local environment files, generated previews, and logs from the mobile upload.
+- Submitted preview APK build: https://expo.dev/accounts/it-elladria/projects/elladria-mobile/builds/e38816b3-f47f-445f-a454-22496220ac82
+- TypeScript and all 30 tests passed before submission. Physical-device testing remains pending.
+- Local build invocation needs the two public Supabase variables in the process environment because the release configuration validates them before EAS fetches cloud variables. Do not remove the release validation.
+- This machine uses the portable Node runtime in `.tools/node-v22.23.2-win-x64`. Git is unavailable on PATH, so this build used `EAS_NO_VCS=1` with `EAS_PROJECT_ROOT` set to `mobile`.
+
+The earlier September 17 checklist is historical: Expo linking, preview environment setup, and signing setup are now complete. Backend deployment and live acceptance checks listed above remain pending.
+
+- Build result: FINISHED. Signed preview APK generated successfully on 2026-09-18.
+- APK download: https://expo.dev/artifacts/eas/7VEYzVx9GTsuUL68B9oGnCt6_lwsYYqVkdglaDT69UU.apk
+- Install this build on a physical Android phone for acceptance testing; it has not yet been device-tested.
+
