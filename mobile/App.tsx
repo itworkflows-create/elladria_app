@@ -611,9 +611,9 @@ function MobileApp() {
                     <Icon name="share-outline" color={C.white} />
                   </Pressable>
                 </View>
-                <Icon name={job.icon} size={44} color="#86f2e4" />
+                <Icon name={job.icon} size={44} color="#dce8f8" />
                 <Text style={[s.h1, { color: C.white }]}>{job.title}</Text>
-                <Text style={{ color: "#dce9ff", fontSize: 16 }}>
+                <Text style={{ color: "#e7eef8", fontSize: 16 }}>
                   {job.company}
                   {"\n"}
                   {job.city}, {job.country}

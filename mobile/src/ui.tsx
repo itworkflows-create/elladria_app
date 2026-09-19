@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import {
   Pressable,
   StyleSheet,
@@ -10,16 +10,16 @@ import {
 import Ionicons from "@expo/vector-icons/Ionicons";
 export type IconName = React.ComponentProps<typeof Ionicons>["name"];
 export const C = {
-  navy: "#131b2e",
-  ink: "#0b1c30",
-  teal: "#006a61",
-  mint: "#e1f6f0",
-  blue: "#dce9ff",
-  pale: "#eff4ff",
-  bg: "#f8f9ff",
+  navy: "#102a43",
+  ink: "#16263b",
+  teal: "#1d4e89",
+  mint: "#e7eef8",
+  blue: "#dce8f8",
+  pale: "#f1f5fa",
+  bg: "#f6f8fb",
   white: "#ffffff",
-  muted: "#596474",
-  line: "#dfe5ed",
+  muted: "#5b6879",
+  line: "#d8e0ea",
   red: "#ba1a1a",
 };
 export function Icon({
@@ -132,7 +132,7 @@ export const s = StyleSheet.create({
     alignItems: "center",
     gap: 12,
     paddingHorizontal: 16,
-    minHeight: 64,
+    minHeight: 68,
     backgroundColor: C.white,
     borderBottomWidth: 1,
     borderBottomColor: C.line,
@@ -151,14 +151,14 @@ export const s = StyleSheet.create({
     fontFamily: "Inter_700Bold",
     fontSize: 36,
     color: C.navy,
-    letterSpacing: -1,
+    letterSpacing: 0,
   },
   h1: {
     fontFamily: "Inter_700Bold",
     fontSize: 28,
     lineHeight: 37,
     color: C.ink,
-    letterSpacing: -0.6,
+    letterSpacing: 0,
   },
   h2: {
     fontFamily: "Inter_600SemiBold",
@@ -197,16 +197,16 @@ export const s = StyleSheet.create({
     gap: 18,
     backgroundColor: C.white,
     padding: 22,
-    borderRadius: 12,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: C.line,
   },
-  hero: { backgroundColor: C.blue, padding: 24, borderRadius: 14, gap: 16 },
+  hero: { backgroundColor: C.blue, padding: 24, borderRadius: 8, borderWidth: 1, borderColor: "#c7d7ec", gap: 16 },
   card: {
     backgroundColor: C.white,
     borderWidth: 1,
     borderColor: C.line,
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 20,
     gap: 14,
   },
@@ -225,7 +225,7 @@ export const s = StyleSheet.create({
     backgroundColor: C.white,
     borderColor: C.line,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 18,
     alignItems: "center",
     gap: 12,
@@ -249,7 +249,7 @@ export const s = StyleSheet.create({
     gap: 12,
     alignItems: "center",
     backgroundColor: C.mint,
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 16,
   },
   search: {
@@ -324,7 +324,7 @@ export const s = StyleSheet.create({
   selectedChip: { backgroundColor: C.teal, borderColor: C.teal },
   detailHero: {
     backgroundColor: C.navy,
-    borderRadius: 14,
+    borderRadius: 8,
     padding: 24,
     gap: 16,
   },
@@ -398,7 +398,7 @@ export const s = StyleSheet.create({
     width: 52,
     paddingVertical: 5,
     alignItems: "center",
-    borderRadius: 14,
+    borderRadius: 8,
   },
   tabText: {
     fontSize: 11,

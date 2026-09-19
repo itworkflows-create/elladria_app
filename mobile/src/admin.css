@@ -1,9 +1,9 @@
-﻿.admin-shell {
-  --ink: #131b2e;
-  --muted: #647084;
-  --line: #e3e8ef;
-  --teal: #006a61;
-  --bg: #f5f7fb;
+.admin-shell {
+  --ink: #102a43;
+  --muted: #5b6879;
+  --line: #d8e0ea;
+  --navy-accent: #1d4e89;
+  --bg: #f6f8fb;
   font-family: Inter_400Regular, system-ui, sans-serif;
   color: var(--ink);
   background: var(--bg);
@@ -55,7 +55,7 @@
 .admin-dialog h3 {
   font-family: Inter_600SemiBold, system-ui, sans-serif;
   margin: 0;
-  color: #131b2e;
+  color: #102a43;
 }
 .admin-shell p {
   margin: 6px 0 0;
@@ -88,7 +88,7 @@
 .admin-brand > span {
   width: 42px;
   height: 44px;
-  background: #131b2e;
+  background: #102a43;
   color: white;
   display: grid;
   place-items: center;
@@ -127,9 +127,9 @@
   font-family: Inter_600SemiBold;
 }
 .admin-sidebar nav button.active {
-  background: #131b2e;
+  background: #102a43;
   color: white;
-  box-shadow: 0 4px 9px #131b2e12;
+  box-shadow: 0 4px 9px #102a4312;
 }
 .nav-count {
   margin-left: auto;
@@ -149,14 +149,14 @@
   gap: 7px;
   font-size: 12px;
   font-family: Inter_600SemiBold;
-  color: #006a61;
+  color: #1d4e89;
 }
 .local-label i,
 .connection i {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #0d9488;
+  background: #315f93;
 }
 .sidebar-bottom p {
   font-size: 12px;
@@ -205,9 +205,9 @@
   display: flex;
   gap: 7px;
   align-items: center;
-  color: #006a61;
-  background: #edf8f4;
-  border: 1px solid #d9efe6;
+  color: #1d4e89;
+  background: #eef3f9;
+  border: 1px solid #cfdaea;
   border-radius: 20px;
   font-size: 11px;
   padding: 6px 12px;
@@ -250,7 +250,7 @@
   font-size: 10px;
   letter-spacing: 1.6px;
   font-family: Inter_700Bold;
-  color: #006a61;
+  color: #1d4e89;
 }
 .page-heading h1 {
   font-size: 29px;
@@ -276,7 +276,7 @@
   transition: background 0.15s;
 }
 .btn.primary {
-  background: #131b2e;
+  background: #102a43;
   color: white;
 }
 .btn.primary:hover {
@@ -299,7 +299,7 @@
 .stat-card {
   background: white;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 21px 22px;
   box-shadow: 0 2px 3px #192e4a02;
 }
@@ -320,8 +320,8 @@
   flex-shrink: 0;
 }
 .stat-icon.teal {
-  background: #e6f6f0;
-  color: #008174;
+  background: #e7eef8;
+  color: #1d4e89;
 }
 .stat-icon.amber {
   background: #fff4dd;
@@ -352,8 +352,8 @@
   justify-content: space-between;
   gap: 24px;
   border: 1px solid #dbe6f6;
-  border-radius: 12px;
-  background: linear-gradient(105deg, #e8efff, #e6f5f2);
+  border-radius: 8px;
+  background: #e7eef8;
   padding: 25px 28px;
   margin-bottom: 28px;
 }
@@ -370,7 +370,7 @@
 .panel {
   background: white;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0 2px 3px #192e4a02;
 }
 .panel-heading {
@@ -387,7 +387,7 @@
   font-size: 12px;
 }
 .text-link {
-  color: #006a61;
+  color: #1d4e89;
   border: 0;
   background: transparent;
   font-family: Inter_600SemiBold !important;
@@ -460,8 +460,8 @@
 }
 .featured {
   display: inline-block;
-  color: #00786d;
-  background: #ecf8f4;
+  color: #1d4e89;
+  background: #eef3f9;
   border-radius: 4px;
   padding: 1px 5px;
   margin-left: 7px;
@@ -488,8 +488,8 @@
   background: currentColor;
 }
 .status.published {
-  color: #007866;
-  background: #e8f6ef;
+  color: #1d4e89;
+  background: #e7eef8;
 }
 .status.draft {
   color: #986b16;
@@ -606,8 +606,8 @@
   white-space: nowrap;
 }
 .status-tabs button.selected {
-  border-color: #006a61;
-  color: #006a61;
+  border-color: #1d4e89;
+  color: #1d4e89;
   font-family: Inter_600SemiBold;
 }
 .status-tabs span {
@@ -660,8 +660,8 @@
 .admin-dialog input:focus,
 .admin-dialog textarea:focus,
 .admin-dialog select:focus {
-  border-color: #00897b;
-  box-shadow: 0 0 0 3px #0d948815;
+  border-color: #315f93;
+  box-shadow: 0 0 0 3px #315f9315;
 }
 .filters select {
   width: 180px;
@@ -761,7 +761,7 @@
   line-height: 1.6;
 }
 .checkbox-row input {
-  accent-color: #006a61;
+  accent-color: #1d4e89;
   width: 17px;
   height: 17px;
   flex-shrink: 0;
@@ -796,8 +796,8 @@
   margin: 4px 6px 22px;
 }
 .mini-hero {
-  background: #dce9ff;
-  border-radius: 12px;
+  background: #dce8f8;
+  border-radius: 8px;
   padding: 20px 16px;
   overflow-wrap: anywhere;
 }
@@ -835,7 +835,7 @@
   font-size: 10px;
 }
 .mini-notice {
-  background: #e5f6ef;
+  background: #e7eef8;
   border-radius: 8px;
   padding: 14px;
   margin-top: 15px;
@@ -961,10 +961,10 @@
   bottom: 26px;
   right: 28px;
   max-width: 480px;
-  background: #15372f;
+  background: #102a43;
   color: white;
   border-radius: 10px;
-  box-shadow: 0 8px 30px #183f3830;
+  box-shadow: 0 8px 30px #102a4330;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1188,7 +1188,7 @@
   background: #f8fafc;
   text-align: left;
   padding: 20px;
-  color: #131b2e;
+  color: #102a43;
 }
 .customer-stats strong {
   display: block;
