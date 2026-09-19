@@ -485,7 +485,7 @@ function AdminWorkspace() {
     <div className="admin-shell">
       <aside className="admin-sidebar">
         <a href="/?admin=1" className="admin-brand">
-          <span>E</span>
+          <span><img src="/elladria-app-icon.png" alt="" /></span>
           <div>
             ELLADRIA<small>ADMIN WORKSPACE</small>
           </div>

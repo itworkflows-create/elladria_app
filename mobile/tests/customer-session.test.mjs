@@ -18,6 +18,7 @@ function setup(request) {
     './cloudApi': {cloudCustomerRequest:request},
     'react-native': {Platform:{OS:'android'},AppState:{currentState:'active',addEventListener:()=>({remove(){}})}},
     'expo-secure-store':{}, './api':{},
+    './pushNotifications': {unregisterPushNotifications:async()=>{}},
   };
   const exports={};
   const source=ts.transpileModule(fs.readFileSync(new URL('../src/useCustomer.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;

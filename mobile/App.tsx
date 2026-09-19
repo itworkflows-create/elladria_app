@@ -1,6 +1,7 @@
 import { PasswordRecoveryGate } from "./src/PasswordRecovery";
 import { buildNotifications } from "./src/notifications";
 import { useNotificationReads } from "./src/useNotificationReads";
+import { usePushNotifications } from "./src/pushNotifications";
 import { jobImageUrl } from "./src/cloudApi";
 ﻿import React, { useEffect, useRef, useState } from "react";
 import {
@@ -45,6 +46,7 @@ import {
 import { cloudEnabled } from "./src/supabase";
 import { useCatalog } from "./src/useCatalog";
 import AdminPanel from "./src/AdminPanel";
+const brandIcon = require("./assets/elladria-app-icon.png");
 type Screen =
   | "language"
   | "home"
@@ -77,6 +79,7 @@ export default function App() {
 }
 function MobileApp() {
   const customer = useCustomer();
+  usePushNotifications(customer.data?.profile.id);
   const [applying, setApplying] = useState(false);
   const { catalog, connection } = useCatalog();
   const jobs = catalog.jobs;
@@ -270,7 +273,7 @@ function MobileApp() {
           {["home", "jobs", "appointments", "profile"].includes(screen) &&
           routes.length === 1 ? (
             <View style={s.brandMark}>
-              <Text style={s.brandLetter}>E</Text>
+              <Image source={brandIcon} style={s.brandImage} />
             </View>
           ) : (
             <Pressable
@@ -332,7 +335,7 @@ function MobileApp() {
             <>
               <View style={s.welcomeBrand}>
                 <View style={[s.brandMark, { width: 56, height: 56 }]}>
-                  <Text style={[s.brandLetter, { fontSize: 32 }]}>E</Text>
+                  <Image source={brandIcon} style={s.brandImage} />
                 </View>
                 <Text style={s.brand}>Elladria</Text>
                 <Text style={s.eyebrow}>YOUR FUTURE, BEYOND BORDERS</Text>

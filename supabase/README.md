@@ -36,6 +36,7 @@ Run these migrations once, in order, in Supabase SQL Editor:
 2. `migrations/202609160002_app_operations.sql`
 3. `migrations/202609160003_upload_limits.sql` (5 MB per candidate file; PDF/JPG/PNG only)
 4. `migrations/202609160004_categories.sql` (managed category choices and catalog feed)
+5. `migrations/202609190001_push_notifications.sql` (private device push tokens and delivery deduplication)
 
 Create a user in Authentication > Users, then grant the role through trusted SQL:
 
@@ -104,7 +105,11 @@ The bell counts unread current announcements and latest application statuses. Op
 a notification or Mark all as read clears its unread flag. Changes to announcement
 text or application status create a new notification identity. Read flags are stored
 per account on the current device; they are not synchronized across devices. Reminders
-remain available separately. These are in-app notices, not OS push notifications.
+remain available separately. The mobile app now registers signed-in physical devices for OS push notifications.
+Publishing an enabled announcement sends a sound notification to registered candidates;
+changing an application status sends one to that application owner. Tokens are private
+under RLS and removed on sign-out or account deletion. Deploy the send-notification
+Edge Function and configure FCM/APNs credentials before expecting delivery.
 
 
 ## Account management release work (2026-09-17)

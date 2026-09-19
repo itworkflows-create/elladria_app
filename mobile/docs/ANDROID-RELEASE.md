@@ -80,4 +80,35 @@ The earlier September 17 checklist is historical: Expo linking, preview environm
 - Build result: FINISHED. Signed preview APK generated successfully on 2026-09-18.
 - APK download: https://expo.dev/artifacts/eas/7VEYzVx9GTsuUL68B9oGnCt6_lwsYYqVkdglaDT69UU.apk
 - Install this build on a physical Android phone for acceptance testing; it has not yet been device-tested.
+## Device push notifications - 2026-09-19
 
+Implemented client permission requests, an Android high-importance Elladria updates
+channel, default notification sound/vibration, Expo push-token registration, RLS-protected
+per-user token storage, sign-out cleanup, announcement broadcasts, and targeted application
+status notifications. Foreground notifications show a banner and play sound.
+
+Required cloud setup before testing:
+
+1. Apply supabase/migrations/202609190001_push_notifications.sql.
+2. Deploy supabase/functions/send-notification.
+3. Configure Android FCM V1 credentials in the Elladria EAS project.
+4. Build and install a new preview APK; the previous APK does not contain the native notification module.
+5. Sign in as a candidate and allow notifications when Android prompts.
+6. From the staff portal, publish an enabled announcement or change that candidate's application status.
+7. Verify delivery with the app foregrounded, backgrounded, and closed.
+
+Use npx eas-cli credentials --platform android to manage Android push credentials.
+The FCM service-account JSON is private and must never be committed or placed in an
+EXPO_PUBLIC_ variable. iOS delivery additionally requires Apple push credentials and a
+new iOS build. Expo Go is not the release acceptance environment; use an EAS development
+or preview build on a physical device.
+## Notification-enabled preview APK - 2026-09-19
+
+- Firebase Android app configured for `com.elladria.app` in project `elladria-1a0fd`.
+- Added `mobile/google-services.json` and connected it through the Expo app configuration.
+- Uploaded and assigned the Firebase service-account key to Elladria EAS for FCM V1. The private key remains outside the repository.
+- EAS preview build `830e4fd7-429b-465e-9a59-3322795d6466` finished successfully.
+- Build details: https://expo.dev/accounts/it-elladria/projects/elladria-mobile/builds/830e4fd7-429b-465e-9a59-3322795d6466
+- APK: https://expo.dev/artifacts/eas/rzIKtanwQ_rwQUIRKL2RxHg3Eb21D5SRAAwzw6O5h-Y.apk
+- Install this new APK because earlier preview builds do not include the native notification module.
+- Device acceptance test: sign in, allow notifications, then test an enabled admin announcement and an application status change while the app is open, in the background, and closed.

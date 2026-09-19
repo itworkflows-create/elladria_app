@@ -5,6 +5,7 @@ import { AppState, Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { apiBase } from "./api";
 import type { CustomerData } from "./customerTypes";
+import { unregisterPushNotifications } from "./pushNotifications";
 const KEY = "elladria.customer.session";
 export function useCustomer() {
   const [data, setData] = useState<CustomerData | null>(null),
@@ -184,6 +185,7 @@ export function useCustomer() {
     }
   }
   async function logout() {
+    await unregisterPushNotifications();
     await request("/logout", { method: "POST" });
     generation.current++;
     token.current = null;

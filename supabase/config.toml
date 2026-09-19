@@ -2,3 +2,6 @@
 # Keep this explicit verification when using publishable keys/new JWT signing keys.
 [functions.delete-account]
 verify_jwt = false
+
+[functions.send-notification]
+verify_jwt = false

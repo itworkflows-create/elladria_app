@@ -138,13 +138,26 @@ export async function adminRequest(route: string, init: RequestInit = {}) {
     const payload = operation === 'content' ? validateContent(body.content)
       : operation === 'delete' ? {id:decodeURIComponent(route.split('/').pop()!)} : validateJob(body.job);
     checked(await c.rpc('write_catalog',{expected_revision:body.revision,operation,payload}));
-    return cloudCatalog(true);
+    const catalog = await cloudCatalog(true);
+    if (operation === 'content' && 'announcementEnabled' in payload && payload.announcementEnabled) {
+      const push = await c.functions.invoke('send-notification',{
+        body:{kind:'announcement',revision:catalog.revision},
+      });
+      if (push.error) console.warn('Announcement saved, but push delivery failed:', push.error.message);
+    }
+    return catalog;
   }
   const match = route.match(/^\/api\/admin\/(applications|appointments)\/([^/]+)$/);
   if (match && init.method === 'PATCH') {
     const rows = checked(await c.from(match[1]).update({status:body.status}).eq('id',match[2])
       .eq('status',body.previousStatus).select('id'));
     if (!rows.length) throw Error('This record changed. Refresh before updating.');
+    if (match[1] === 'applications') {
+      const push = await c.functions.invoke('send-notification',{
+        body:{kind:'application',applicationId:match[2]},
+      });
+      if (push.error) console.warn('Status updated, but push delivery failed:', push.error.message);
+    }
     return {ok:true};
   }
   throw Error('Unsupported admin operation.');
