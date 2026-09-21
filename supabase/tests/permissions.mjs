@@ -11,7 +11,7 @@ create table storage.objects(id uuid default gen_random_uuid(),bucket_id text,na
 alter table storage.objects enable row level security;
 grant select,insert,delete on storage.objects to authenticated;
 create function storage.foldername(text) returns text[] language sql as $$ select string_to_array($1,'/') $$;`);
-for (const file of ['202609160001_initial.sql','202609160002_app_operations.sql','202609160003_upload_limits.sql','202609160004_categories.sql']) await db.exec(fs.readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'));
+for (const file of ['202609160001_initial.sql','202609160002_app_operations.sql','202609160003_upload_limits.sql','202609160004_categories.sql','202609210001_appearance_preference.sql']) await db.exec(fs.readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'));
 const admin='11111111-1111-4111-8111-111111111111', a='22222222-2222-4222-8222-222222222222',b='33333333-3333-4333-8333-333333333333';
 await db.exec(`insert into auth.users values('${admin}','admin@example.test','{}'),('${a}','a@example.test','{"name":"Candidate A"}'),('${b}','b@example.test','{}'); insert into public.staff_roles values('${admin}','admin');`);
 async function as(role,id='') {await db.exec('reset role'); await db.query("select set_config('request.jwt.claim.sub',$1,false)",[id]); await db.exec('set role '+role);}
@@ -20,6 +20,9 @@ await as('authenticated',a);
 assert.equal((await db.query('select * from profiles')).rows.length,1);
 await rejects("insert into staff_roles values($1,'admin')",[a]);
 await rejects("update profiles set email='fake@test'");
+await db.query("update profiles set appearance='dark'");
+assert.equal((await db.query('select appearance from profiles')).rows[0].appearance,'dark');
+await rejects("update profiles set appearance='system'");
 await rejects("select write_catalog(1,'delete','{}')");
 const job={id:'test-job',title:'Test job',company:'Example',city:'City',country:'Romania',salary:'1000',category:'Manufacturing',description:'Description',hours:'40',accommodation:'Included',benefits:'Provided',contract:'Full-time',openings:2,requirements:['Experience'],icon:'business-outline',status:'draft',featured:false};
 await as('authenticated',admin);

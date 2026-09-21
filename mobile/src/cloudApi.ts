@@ -36,7 +36,10 @@ export async function staffSession() {
   if (!role) throw Error(`This account has no staff access. Signed in as ${data.user.email || 'unknown email'}. User UID: ${data.user.id}. Assign a staff role to this exact UID in Supabase, then sign in again.`);
   return data.user;
 }
-const profile = (r: Row) => ({ id:r.id, name:r.name, phone:r.phone, email:r.email, createdAt:r.created_at });
+const profile = (r: Row) => ({
+  id:r.id, name:r.name, phone:r.phone, email:r.email, createdAt:r.created_at,
+  appearance:r.appearance === "dark" ? "dark" : "light",
+});
 const application = (r: Row) => ({ id:r.id, customerId:r.customer_id, jobId:r.job_id,
   jobTitle:r.job_title, company:r.company, status:r.status, createdAt:r.created_at });
 const appointment = (r: Row) => ({ id:r.id, customerId:r.customer_id, office:r.office, date:r.date,
@@ -104,6 +107,13 @@ export async function cloudCustomerRequest(route: string, init: RequestInit = {}
         time:body.time,reason:body.reason,notes:body.notes || ''}));
     else if (route.startsWith('/appointments/') && init.method === 'PATCH')
       checked(await c.rpc('cancel_appointment',{appointment_id:route.split('/')[2]}));
+    else if (route === '/preferences/appearance' && init.method === 'PATCH') {
+      if (body.theme !== 'light' && body.theme !== 'dark')
+        throw Error('Appearance must be light or dark.');
+      const rows = checked(await c.from('profiles').update({appearance:body.theme})
+        .eq('id',user.id).select('id'));
+      if (!rows.length) throw Error('Your profile could not be updated.');
+    }
     else throw Error('Unsupported customer operation.');
   }
   return cloudCustomerData();

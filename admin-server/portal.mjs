@@ -290,6 +290,7 @@ export function createPortal(directory, getCatalog) {
           salt,
           passwordHash,
           createdAt: new Date().toISOString(),
+          appearance: "light",
         };
         transaction(() => db.customers.push(user));
         return reply(res, 201, session(user, res));
@@ -310,6 +311,13 @@ export function createPortal(directory, getCatalog) {
     const user = userFor(req);
     if (url.pathname === "/api/customer/me" && req.method === "GET")
       return reply(res, 200, view(user));
+    if (url.pathname === "/api/customer/preferences/appearance" && req.method === "PATCH") {
+      const input = await json(req);
+      if (input.theme !== "light" && input.theme !== "dark")
+        throw fail(400, "Appearance must be light or dark.");
+      transaction(() => { user.appearance = input.theme; });
+      return reply(res, 200, view(user));
+    }
     if (url.pathname === "/api/customer/logout" && req.method === "POST") {
       const token =
         req.headers.authorization?.replace(/^Bearer /, "") ||

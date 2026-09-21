@@ -9,7 +9,12 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 export type IconName = React.ComponentProps<typeof Ionicons>["name"];
-export const C = {
+type Palette = {
+  navy: string; ink: string; teal: string; mint: string; blue: string;
+  pale: string; bg: string; white: string; muted: string; line: string; red: string;
+};
+export type AppTheme = "light" | "dark";
+const light: Palette = {
   navy: "#102a43",
   ink: "#16263b",
   teal: "#1d4e89",
@@ -22,6 +27,12 @@ export const C = {
   line: "#d8e0ea",
   red: "#ba1a1a",
 };
+const dark: Palette = {
+  navy: "#d7e7fb", ink: "#e7edf6", teal: "#a9cbff", mint: "#183659",
+  blue: "#203f63", pale: "#17283b", bg: "#0d1826", white: "#142235",
+  muted: "#b9c6d7", line: "#31465e", red: "#ffb4ab",
+};
+export let C: Palette = light;
 export function Icon({
   name,
   color = C.navy,
@@ -116,7 +127,7 @@ export function Empty({
     </View>
   );
 }
-export const s = StyleSheet.create({
+const createStyles = () => StyleSheet.create({
   root: { flex: 1, backgroundColor: C.bg },
   flex: { flex: 1 },
   content: {
@@ -434,3 +445,8 @@ export const s = StyleSheet.create({
     backgroundColor: C.teal,
   },
 });
+export let s = createStyles();
+export function setTheme(theme: AppTheme) {
+  C = theme === "dark" ? dark : light;
+  s = createStyles();
+}

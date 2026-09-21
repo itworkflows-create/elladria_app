@@ -71,6 +71,19 @@ test("customer accounts, bookings and applications appear in admin and status up
       (await send(url, "/api/customer/me", undefined, undefined, "GET")).status,
       401,
     );
+    let result = await send(
+      url,
+      "/api/customer/preferences/appearance",
+      { theme: "dark" },
+      a.body.token,
+      "PATCH",
+    );
+    assert.equal(result.status, 200);
+    assert.equal(result.body.profile.appearance, "dark");
+    assert.equal(
+      (await send(url, "/api/customer/preferences/appearance", { theme: "system" }, a.body.token, "PATCH")).status,
+      400,
+    );
     const booking = {
       office: "Colombo HQ",
       date: availableDates()[0],
@@ -78,7 +91,7 @@ test("customer accounts, bookings and applications appear in admin and status up
       reason: "Visa Consultation",
       notes: "Discuss my application",
     };
-    let result = await send(
+    result = await send(
       url,
       "/api/customer/appointments",
       booking,

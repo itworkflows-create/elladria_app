@@ -1,5 +1,9 @@
 ﻿import type { Appointment, Profile } from "./domain";
-export type CustomerProfile = Profile & { id: string; createdAt: string };
+export type CustomerProfile = Profile & {
+  id: string;
+  createdAt: string;
+  appearance: "light" | "dark";
+};
 export type CustomerAppointment = Appointment & {
   customerId: string;
   createdAt: string;

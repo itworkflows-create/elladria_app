@@ -36,7 +36,7 @@ import {
   type Job,
 } from "./src/domain";
 import { translate } from "./src/i18n";
-import { Button, Card, Empty, Icon, C, s, type IconName } from "./src/ui";
+import { Button, Card, Empty, Icon, C, s, setTheme, type AppTheme, type IconName } from "./src/ui";
 import { Booking, Registration, dateLabel } from "./src/forms";
 import { useCustomer } from "./src/useCustomer";
 import {
@@ -67,6 +67,7 @@ type Screen =
   | "staff";
 type Route = { screen: Screen; jobId?: string };
 const STORAGE_KEY = "elladria.demo.v1";
+const THEME_STORAGE_KEY = "elladria.theme.v1";
 export default function App() {
   if (
     Platform.OS === "web" &&
@@ -91,6 +92,7 @@ function MobileApp() {
   const notificationReads=useNotificationReads(customer.data?.profile.id ?? "guest",notifications);
   const featuredJob = jobs.find((item) => item.featured) ?? jobs[0];
   const [state, setState] = useState<DemoState>(initialState);
+  const [theme, setAppTheme] = useState<AppTheme>("light");
   const [ready, setReady] = useState(false);
   const [storageError, setStorageError] = useState("");
   const [fontsLoaded, fontError] = useFonts({
@@ -122,11 +124,14 @@ function MobileApp() {
   const notify = (message: string) => setNotice(message);
   useEffect(() => {
     let active = true;
-    AsyncStorage.getItem(STORAGE_KEY)
-      .then((raw) => {
+    Promise.all([AsyncStorage.getItem(STORAGE_KEY), AsyncStorage.getItem(THEME_STORAGE_KEY)])
+      .then(([raw, savedTheme]) => {
         if (!active) return;
         const restored = raw ? restoreState(raw) : initialState;
+        const nextTheme: AppTheme = savedTheme === "dark" ? "dark" : "light";
         setState(restored);
+        setAppTheme(nextTheme);
+        setTheme(nextTheme);
         setRoutes([{ screen: restored.language ? "home" : "language" }]);
       })
       .catch(() => {
@@ -142,6 +147,25 @@ function MobileApp() {
       active = false;
     };
   }, []);
+  const toggleTheme = () => {
+    const nextTheme: AppTheme = theme === "light" ? "dark" : "light";
+    setTheme(nextTheme);
+    setAppTheme(nextTheme);
+    AsyncStorage.setItem(THEME_STORAGE_KEY, nextTheme).catch(() =>
+      setStorageError("Could not save your appearance preference on this device."),
+    );
+    if (customer.data)
+      void customer.action("/preferences/appearance", { theme: nextTheme }, "PATCH").catch(() =>
+        notify("Appearance was saved on this device but could not be synced to your account."),
+      );
+  };
+  useEffect(() => {
+    const savedTheme = customer.data?.profile.appearance;
+    if (!savedTheme || savedTheme === theme) return;
+    setTheme(savedTheme);
+    setAppTheme(savedTheme);
+    void AsyncStorage.setItem(THEME_STORAGE_KEY, savedTheme);
+  }, [customer.data?.profile.appearance]);
   useEffect(() => {
     if (!ready) return;
     writeQueue.current = writeQueue.current
@@ -274,7 +298,7 @@ function MobileApp() {
     );
   return (
     <SafeAreaView style={s.root} edges={["top", "left", "right", "bottom"]}>
-      <StatusBar style="dark" />
+      <StatusBar style={theme === "dark" ? "light" : "dark"} />
       {screen !== "language" && (
         <View style={s.header}>
           {["home", "jobs", "appointments", "profile"].includes(screen) &&
@@ -771,6 +795,12 @@ function MobileApp() {
                 title={t("Change Language")}
                 secondary
                 onPress={() => nav("language")}
+              />
+              <Button
+                title={theme === "dark" ? "Use light mode" : "Use night mode"}
+                secondary
+                icon={theme === "dark" ? "sunny-outline" : "moon-outline"}
+                onPress={toggleTheme}
               />
               {(catalog.content.supportEmail ||
                 catalog.content.supportPhone) && (
