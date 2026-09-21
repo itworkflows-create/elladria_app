@@ -49,3 +49,5 @@ admin-preview/
 .env
 .env.*
 !.env.example
+
+dist-about-legal/

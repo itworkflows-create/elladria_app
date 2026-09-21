@@ -112,3 +112,38 @@ or preview build on a physical device.
 - APK: https://expo.dev/artifacts/eas/rzIKtanwQ_rwQUIRKL2RxHg3Eb21D5SRAAwzw6O5h-Y.apk
 - Install this new APK because earlier preview builds do not include the native notification module.
 - Device acceptance test: sign in, allow notifications, then test an enabled admin announcement and an application status change while the app is open, in the background, and closed.
+
+## About & Legal preview - 2026-09-21
+
+- Added Profile > About & Legal for both guests and signed-in candidates.
+- Includes app version, company/contact details, and offline-readable Privacy Policy and Terms of Use screens with normal back navigation.
+- Added Sinhala and Tamil navigation labels. Document bodies are in English; no acceptance is collected.
+- Concurrent workspace edits added company details, contact links, retention statements and revised legal copy. These edits were preserved; their factual/legal approval was not independently verified in this task.
+- Updated app and package versions to 1.0.1 and enabled automatic Android version-code increments for preview builds.
+- TypeScript and all 30 regression tests passed. Android Hermes and web exports succeeded.
+- New signed APK has NOT been submitted or generated: automatic approval review rejected the EAS upload of project source/configuration. Explicit user approval for upload to the existing it-elladria/elladria-mobile EAS project is required to proceed.
+- Existing .easignore excludes local environment files, signing-key file patterns, dependencies, generated exports, and logs from the build upload.
+
+## About & Legal company details - 2026-09-21
+
+- Updated Profile > About & Legal with Elladria Lanka (PVT) LTD, the supplied tagline, Licence No. 3627, telephone and website buttons, social account names, and all seven placement countries.
+- Updated the privacy text with application retention of 6 months after an unsuccessful recruitment process ends, uploaded document retention of 3 months, no third-party advertising or tracking, and Supabase/Expo as the external processors.
+- Facebook entries remain text because exact page URLs were not provided.
+- Retention periods are policy text supplied by the owner; this UI change does not implement or verify scheduled backend deletion.
+- TypeScript and all 30 tests passed.
+- New EAS APK submission is pending explicit approval to upload source/configuration to the existing Expo project: automatic approval review blocked submission before it ran. No new APK has been generated for this change.
+- Local Android Hermes export succeeded (779 modules). This verifies bundling; it is not an installable APK.
+- Final browser smoke check passed at 390px: guest access, version 1.0.1, both legal pages, contact button, back navigation, no horizontal overflow and no uncaught errors. TypeScript passed again after concurrent edits. Physical Android testing remains pending.
+
+## About & Legal preview build approved - 2026-09-21
+
+- Owner explicitly approved uploading the source/configuration to the existing Expo project; the earlier upload blocker is resolved.
+- Submitted build: https://expo.dev/accounts/it-elladria/projects/elladria-mobile/builds/ad9ceebb-b8a1-4116-ad57-1d8f76a76f98
+- App version 1.0.1, Android versionCode 2, preview profile, existing Android signing credentials.
+- Build is in progress; artifact details will be recorded after completion.
+
+- Build result: FINISHED. Signed preview APK generated successfully on 2026-09-21.
+- APK download: https://expo.dev/artifacts/eas/YjOVwQfCoIbqK_Ud6z1oxhG3Pz2fnlT92-Aa6xE_LEg.apk
+- Local copy: `elladria-preview-2026-09-21.apk` in the repository root.
+- This completed build supersedes the in-progress status above. Physical-device acceptance testing remains pending.
+- Download verified as an APK archive (AndroidManifest.xml and classes.dex present), 73,868,624 bytes. SHA-256: B12D6B528B57BB5BB2888A3A557E266BB24D97ED51EB62D31AEA6D2FFDF604EE

@@ -1,6 +1,11 @@
 ﻿import type { Language } from "./domain";
 // Interface translations are draft copy; sample job descriptions stay in English.
 const si: Record<string, string> = {
+  "About & Legal": "අප ගැන සහ නීතිමය තොරතුරු",
+  "Legal information": "නීතිමය තොරතුරු",
+  "Privacy Policy": "පෞද්ගලිකත්ව ප්‍රතිපත්තිය",
+  "Terms of Use": "භාවිත නියමයන්",
+  "Contact Elladria": "Elladria අමතන්න",
   Home: "මුල් පිටුව",
   Jobs: "රැකියා",
   Appts: "හමුවීම්",
@@ -74,6 +79,11 @@ const si: Record<string, string> = {
   "Other Inquiry": "වෙනත් විමසීමක්",
 };
 const ta: Record<string, string> = {
+  "About & Legal": "எங்களைப் பற்றி மற்றும் சட்டத் தகவல்கள்",
+  "Legal information": "சட்டத் தகவல்கள்",
+  "Privacy Policy": "தனியுரிமைக் கொள்கை",
+  "Terms of Use": "பயன்பாட்டு விதிமுறைகள்",
+  "Contact Elladria": "Elladria ஐத் தொடர்புகொள்ளவும்",
   Home: "முகப்பு",
   Jobs: "வேலைகள்",
   Appts: "சந்திப்புகள்",

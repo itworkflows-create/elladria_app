@@ -9,7 +9,8 @@
       "env": {
         "EXPO_PUBLIC_BACKEND": "supabase",
         "ELLADRIA_RELEASE": "1"
-      }
+      },
+      "autoIncrement": true
     },
     "production": {
       "autoIncrement": true,

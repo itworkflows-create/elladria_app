@@ -1,44 +1,44 @@
 {
-    "expo":  {
-                 "name":  "Elladria",
-                 "slug":  "elladria-mobile",
-                 "version":  "1.0.0",
-                 "orientation":  "portrait",
-                 "icon":  "./assets/icon.png",
-                 "userInterfaceStyle":  "light",
-                 "ios":  {
-                             "supportsTablet":  true,
-                             "bundleIdentifier":  "com.elladria.demo"
-                         },
-                 "android":  {
-                                 "adaptiveIcon":  {
-                                                      "backgroundColor":  "#102a43",
-                                                      "foregroundImage":  "./assets/icon.png"
-                                                  },
-                                 "predictiveBackGestureEnabled":  false,
-                                 "package":  "com.elladria.app",
-                                 "googleServicesFile":  "./google-services.json"
-                             },
-                 "web":  {
-                             "favicon":  "./assets/favicon.png"
-                         },
-                 "plugins":  [
-                                 "expo-font",
-                                 "expo-secure-store",
-                                 [
-                                     "expo-notifications",
-                                     {
-                                         "color":  "#1d4e89",
-                                         "defaultChannel":  "elladria-updates"
-                                     }
-                                 ]
-                             ],
-                 "scheme":  "elladria",
-                 "extra":  {
-                               "eas":  {
-                                           "projectId":  "07369ef0-e90a-4656-8388-a5b9fbfd1557"
-                                       }
-                           },
-                 "owner":  "it-elladria"
-             }
+  "expo": {
+    "name": "Elladria",
+    "slug": "elladria-mobile",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.elladria.demo"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#102a43",
+        "foregroundImage": "./assets/icon.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.elladria.app",
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "color": "#1d4e89",
+          "defaultChannel": "elladria-updates"
+        }
+      ]
+    ],
+    "scheme": "elladria",
+    "extra": {
+      "eas": {
+        "projectId": "07369ef0-e90a-4656-8388-a5b9fbfd1557"
+      }
+    },
+    "owner": "it-elladria"
+  }
 }

@@ -1,3 +1,4 @@
+import { AboutLegal, LegalDocument } from "./src/AboutLegal";
 import { PasswordRecoveryGate } from "./src/PasswordRecovery";
 import { buildNotifications } from "./src/notifications";
 import { useNotificationReads } from "./src/useNotificationReads";
@@ -56,6 +57,9 @@ type Screen =
   | "appointments"
   | "booking"
   | "profile"
+  | "about"
+  | "privacy"
+  | "terms"
   | "saved"
   | "notifications"
   | "reminders"
@@ -252,6 +256,9 @@ function MobileApp() {
     appointments: "My Appointments",
     booking: "Make Appointment",
     profile: "Profile",
+    about: "About & Legal",
+    privacy: "Privacy Policy",
+    terms: "Terms of Use",
     saved: "Saved Jobs",
     reminders: "My Reminders",
     notifications: "Notifications",
@@ -777,6 +784,7 @@ function MobileApp() {
                   </Text>
                 </Card>
               )}
+              <Button title={t("About & Legal")} secondary icon="information-circle-outline" onPress={() => nav("about")} />
               {(state.profile || state.appointments.length > 0) && (
                 <Text style={s.small}>
                   Earlier device-only demo records are preserved locally. They
@@ -785,6 +793,8 @@ function MobileApp() {
               )}
             </>
           )}
+          {screen === "about" && <AboutLegal onOpen={nav} supportEmail={catalog.content.supportEmail} supportPhone={catalog.content.supportPhone} t={t} />}
+          {(screen === "privacy" || screen === "terms") && <LegalDocument page={screen} />}
           {screen === "notifications" && <>
             <Text style={s.body}>Announcements and your latest application updates. Read status is saved on this device.</Text>
             {!!notificationReads.error && <Text style={s.error}>{notificationReads.error}</Text>}
